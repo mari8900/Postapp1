@@ -102,7 +102,7 @@
         android:layout_height="62dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="28dp"
-        android:backgroundTint="@color/RomaniaBlue"
+        android:background="@drawable/custom_button"
         android:text="Register user"
         android:fontFamily="@font/fredokamedium"
         android:textStyle="bold"

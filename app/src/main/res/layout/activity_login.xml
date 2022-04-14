@@ -7,12 +7,13 @@
 
     tools:context=".LoginActivity">
 
+
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="375dp"
-        android:layout_height="168dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="344dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="52dp"
         android:src="@drawable/logopostapp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +23,7 @@
         android:layout_width="375dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         android:drawableStart="@drawable/custom_email_icon"
         android:drawablePadding="10dp"
         android:background="@drawable/custom_input"
@@ -55,11 +56,11 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="375dp"
+        android:layout_width="365dp"
         android:layout_height="62dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="76dp"
-        android:backgroundTint="@color/RomaniaBlue"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/custom_button"
         android:text="LOGIN"
         android:fontFamily="@font/fredokamedium"
         android:textColor="#fff"

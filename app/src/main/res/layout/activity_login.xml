@@ -19,7 +19,7 @@
     <EditText
         android:id="@+id/etLoginEmail"
         android:layout_width="375dp"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:drawableStart="@drawable/custom_email_icon"
@@ -37,9 +37,9 @@
     <EditText
         android:id="@+id/etLoginPass"
         android:layout_width="375dp"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="25dp"
         android:drawableStart="@drawable/custom_lock_icon"
         android:drawablePadding="10dp"
         android:background="@drawable/custom_input"

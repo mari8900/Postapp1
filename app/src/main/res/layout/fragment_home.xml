@@ -72,9 +72,10 @@
                     android:textColor="@color/black"/>
 
                 <ImageView
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:maxHeight="100dp"
+                    android:src="@drawable/cardv11"
                     android:layout_alignParentRight="true"/>
 
             </RelativeLayout>
@@ -118,10 +119,11 @@
                     android:textColor="@color/black"/>
 
                 <ImageView
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
                     android:maxHeight="100dp"
-                    android:layout_alignParentRight="true"/>
+                    android:src="@drawable/appt1" />
 
             </RelativeLayout>
 
@@ -164,9 +166,10 @@
                     android:textColor="@color/black"/>
 
                 <ImageView
-                    android:layout_width="150dp"
+                    android:layout_width="110dp"
                     android:layout_height="100dp"
                     android:maxHeight="100dp"
+                    android:src="@drawable/omulet2"
                     android:layout_alignParentRight="true"/>
 
             </RelativeLayout>

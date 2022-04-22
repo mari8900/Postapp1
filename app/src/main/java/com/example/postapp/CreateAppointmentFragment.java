@@ -2,22 +2,29 @@ package com.example.postapp;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CreateAppointmentFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private Button btnDate;
+    private Button btnTime;
+    private EditText etTrackingNumber;
+    private int hour, minute;
 
     @Nullable
     @Override
@@ -27,13 +34,26 @@ public class CreateAppointmentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_createappointment, container, false);
 
         btnDate = (Button) view.findViewById(R.id.btnDatePicker);
-        btnDate.setText(getTodaysDate());
+        //btnDate.setText(getTodaysDate());
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openDatePicker();
             }
         });
+
+        btnTime = view.findViewById(R.id.btnHourPicker);
+        btnTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTimePicker(view);
+            }
+        });
+
+        etTrackingNumber = view.findViewById(R.id.etTrackingNb);
+
+
+
         // return inflater.inflate(R.layout.fragment_createappointment, container, false);
         return view;
     }
@@ -66,7 +86,6 @@ public class CreateAppointmentFragment extends Fragment {
 
         datePickerDialog = new DatePickerDialog(getActivity(), style, dateSetListener, year, month, day);
     }
-
 
     private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
@@ -115,5 +134,22 @@ public class CreateAppointmentFragment extends Fragment {
 
     public void openDatePicker() {
         datePickerDialog.show();
+    }
+
+    public void openTimePicker(View view) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                hour = selectedHour;
+                minute = selectedMinute;
+                btnTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+            }
+        };
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), style, onTimeSetListener, hour, minute, true);
+        timePickerDialog.setTitle("Select hour");
+        timePickerDialog.show();
     }
 }

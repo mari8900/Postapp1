@@ -27,33 +27,36 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="370dp"
+            android:layout_width="330dp"
             android:layout_height="55dp"
             app:cardCornerRadius="15dp"
             android:layout_gravity="center"
             android:layout_marginTop="35dp"
-            android:backgroundTint="@color/LightGrey">
+            android:backgroundTint="@color/white">
 
                 <EditText
                     android:id="@+id/etTrackingNb"
-                    android:layout_width="355dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="Tracking number"
                     android:text=""
                     android:inputType="number"
                     android:fontFamily="@font/fredokamedium"
                     android:textSize="25sp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:ems="10">
+                    <requestFocus/>
+                </EditText>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="370dp"
+            android:layout_width="330dp"
             android:layout_height="55dp"
             app:cardCornerRadius="15dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:backgroundTint="@color/LightGrey">
+            android:backgroundTint="@color/white">
 
             <Button
                 android:id="@+id/btnDatePicker"
@@ -67,7 +70,25 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="330dp"
+            android:layout_height="55dp"
+            app:cardCornerRadius="15dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:background="@color/white">
 
+            <Button
+                android:id="@+id/btnHourPicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Select hour"
+                android:fontFamily="@font/fredokamedium"
+                android:textSize="25sp"
+                style="?android:spinnerStyle"
+                android:gravity="center"/>
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

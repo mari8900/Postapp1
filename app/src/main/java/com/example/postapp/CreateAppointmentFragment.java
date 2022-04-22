@@ -3,13 +3,17 @@ package com.example.postapp;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -22,9 +26,14 @@ import java.util.Locale;
 public class CreateAppointmentFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private Button btnDate;
+
     private Button btnTime;
-    private EditText etTrackingNumber;
     private int hour, minute;
+
+    ListView listView;
+    String[] postalOffices = {"Oficiul Postal 7", "Oficiul Postal 23", "Oficiul Postal 38", "Oficiul Postal 44", "Oficiul Postal 56", "Oficiul Postal 67", "Oficiul Postal 79", "Oficiul Postal 84"};
+    String[] addresses = {"Sos. Giurgiului 119", "Str Romancierilor 1", "Str. Teiul Doamnei 19", "Str. Gheorghe Sincai 2", "Calea Crangasi 23", "Calea Plevnei 46-48", "Calea Mosilor 314", "Splaiul Independentei 290"};
+
 
     @Nullable
     @Override
@@ -50,9 +59,9 @@ public class CreateAppointmentFragment extends Fragment {
             }
         });
 
-        etTrackingNumber = view.findViewById(R.id.etTrackingNb);
-
-
+        listView = view.findViewById(R.id.listview);
+        ListViewAdapter listViewAdapter = new ListViewAdapter(container.getContext(), postalOffices, addresses);
+        listView.setAdapter(listViewAdapter);
 
         // return inflater.inflate(R.layout.fragment_createappointment, container, false);
         return view;
@@ -88,48 +97,48 @@ public class CreateAppointmentFragment extends Fragment {
     }
 
     private String makeDateString(int day, int month, int year) {
-        return getMonthFormat(month) + " " + day + " " + year;
+        return day + " " + getMonthFormat(month) + " " + year;
     }
 
     private String getMonthFormat(int month) {
         if(month == 1) {
-            return "JAN";
+            return "Ian";
         }
         if(month == 2) {
-            return "FEB";
+            return "Feb";
         }
         if(month == 3) {
-            return "MAR";
+            return "Mar";
         }
         if(month == 4) {
-            return "APR";
+            return "Apr";
         }
         if(month == 5) {
-            return "MAY";
+            return "Mai";
         }
         if(month == 6) {
-            return "JUN";
+            return "Iun";
         }
         if(month == 7) {
-            return "JUL";
+            return "Iul";
         }
         if(month == 8) {
-            return "AUG";
+            return "Aug";
         }
         if(month == 9) {
-            return "SEP";
+            return "Sep";
         }
         if(month == 10) {
-            return "OCT";
+            return "Oct";
         }
         if(month == 11) {
-            return "NOV";
+            return "Noi";
         }
         if(month == 12) {
-            return "DEC";
+            return "Dec";
         }
 
-        return "JAN";
+        return "Ian";
     }
 
     public void openDatePicker() {
@@ -151,5 +160,33 @@ public class CreateAppointmentFragment extends Fragment {
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), style, onTimeSetListener, hour, minute, true);
         timePickerDialog.setTitle("Select hour");
         timePickerDialog.show();
+    }
+
+    class ListViewAdapter extends ArrayAdapter<String> {
+        Context context;
+        String[] postalOffices;
+        String[] addresses;
+
+        ListViewAdapter(Context context, String[] postalOffices, String[] addresses) {
+            super(context, R.layout.row, R.id.tvPoNumber, postalOffices);
+            this.context = context;
+            this.postalOffices = postalOffices;
+            this.addresses = addresses;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View row = layoutInflater.inflate(R.layout.row, parent, false);
+            TextView poNb = row.findViewById(R.id.tvPoNumber);
+            TextView poAddress = row.findViewById(R.id.tvPoAddress);
+
+            poNb.setText(postalOffices[position]);
+            poAddress.setText(addresses[position]);
+
+            return row;
+        }
     }
 }

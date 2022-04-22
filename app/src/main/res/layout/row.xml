@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/image"
+            android:src="@drawable/postaromana"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvPoNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Oficiul Postal 7"
+                android:textColor="@color/RomaniaRed"
+                android:fontFamily="@font/fredokamedium"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="23sp"/>
+
+            <TextView
+                android:id="@+id/tvPoAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sos. Giurgiului 119"
+                android:fontFamily="@font/fredokamedium"
+                android:textStyle="normal"
+                android:layout_margin="5dp"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+<!--        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            android:layout_marginTop="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:src="@drawable/postaromana"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Oficiul Postal 23"-->
+<!--                    android:textColor="@color/RomaniaRed"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:textSize="23sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Str Romancierilor 1"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:textSize="20sp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            android:layout_marginTop="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:src="@drawable/postaromana"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Oficiul Postal 38"-->
+<!--                    android:textColor="@color/RomaniaRed"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:textSize="23sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Str. Teiul Doamnei 19"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:textSize="20sp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            android:layout_marginTop="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:src="@drawable/postaromana"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Oficiul Postal 44"-->
+<!--                    android:textColor="@color/RomaniaRed"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:textSize="23sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Str. Gheorghe Sincai 2"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:textSize="20sp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            android:layout_marginTop="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:src="@drawable/postaromana"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Oficiul Postal 56"-->
+<!--                    android:textColor="@color/RomaniaRed"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:textSize="23sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Calea Crangasi 23"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:textSize="20sp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            android:layout_marginTop="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:src="@drawable/postaromana"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Oficiul Postal 67"-->
+<!--                    android:textColor="@color/RomaniaRed"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:textSize="23sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Calea Plevnei 46-48"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:textSize="20sp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            android:layout_marginTop="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:src="@drawable/postaromana"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Oficiul Postal 79"-->
+<!--                    android:textColor="@color/RomaniaRed"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:textSize="23sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Calea Mosilor 314"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:textSize="20sp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            android:layout_marginTop="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:src="@drawable/postaromana"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Oficiul Postal 84"-->
+<!--                    android:textColor="@color/RomaniaRed"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:textSize="23sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Splaiul Independentei 290"-->
+<!--                    android:fontFamily="@font/fredokamedium"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:textSize="20sp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+    </LinearLayout>
+</ScrollView>

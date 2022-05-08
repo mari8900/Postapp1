@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pad_small">4dp</dimen>
+    <dimen name="normal_text">18sp</dimen>
+    <dimen name="pad_big">8sp</dimen>
+
+
+    <dimen name="bottom_nav_height">56dp</dimen>
+    <dimen name="bottom_nav_layout_height">84dp</dimen>
+    <dimen name="bottom_nav_bottom_curve_offset">16dp</dimen>
+    <dimen name="bottom_nav_fab_margin">8dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+
+    <dimen name="cbn_fab_size">56dp</dimen>
+    <dimen name="cbn_height">56dp</dimen>
+    <dimen name="cbn_layout_height">84dp</dimen>
+    <dimen name="cbn_bottom_curve_offset">12dp</dimen>
+    <dimen name="cbn_fab_top_offset">8dp</dimen>
+    <dimen name="text_size">25sp</dimen>
+    <dimen name="small_text">20sp</dimen>
+</resources>

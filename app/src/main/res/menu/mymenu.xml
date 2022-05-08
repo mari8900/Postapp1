@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="HOME"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/createAppt"
+        android:title="CREATE APPT"
+        android:icon="@drawable/ic_date"/>
+    <item
+        android:id="@+id/profile"
+        android:title="ACCOUNT"
+        android:icon="@drawable/ic_account"/>
+</menu>

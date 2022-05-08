@@ -5,29 +5,34 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import com.example.postapp.databinding.FragmentAppointmentBinding;
+
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateAppointmentFragment extends Fragment {
+public class FragmentAppointment extends Fragment {
     private DatePickerDialog datePickerDialog;
-    private Button btnDate;
 
-    private Button btnTime;
+    private FragmentAppointmentBinding binding;
+
     private int hour, minute;
 
     ListView listView;
@@ -38,33 +43,42 @@ public class CreateAppointmentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        binding = FragmentAppointmentBinding.inflate(inflater);
+
         initDatePicker();
 
-        View view = inflater.inflate(R.layout.fragment_createappointment, container, false);
-
-        btnDate = (Button) view.findViewById(R.id.btnDatePicker);
-        //btnDate.setText(getTodaysDate());
-        btnDate.setOnClickListener(new View.OnClickListener() {
+        binding.btnDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openDatePicker();
             }
         });
 
-        btnTime = view.findViewById(R.id.btnHourPicker);
-        btnTime.setOnClickListener(new View.OnClickListener() {
+        binding.btnHourPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openTimePicker(view);
             }
         });
 
-        listView = view.findViewById(R.id.listview);
-        ListViewAdapter listViewAdapter = new ListViewAdapter(container.getContext(), postalOffices, addresses);
-        listView.setAdapter(listViewAdapter);
+        SpinnerNew spinnerAdapter = new SpinnerNew(getContext());
+        binding.spinnerCreate.setAdapter(spinnerAdapter);
+        binding.spinnerCreate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // Log.e("Spinner", "selected pos: " + i);
+            }
 
-        // return inflater.inflate(R.layout.fragment_createappointment, container, false);
-        return view;
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        // return inflater.inflate(R.layout.fragment_appointment, container, false);
+        // Log.e("jgjg", "Fragment create");
+        return binding.getRoot();
     }
 
     private String getTodaysDate() {
@@ -82,7 +96,7 @@ public class CreateAppointmentFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
-                btnDate.setText(date);
+                binding.btnDatePicker.setText(date);
             }
         };
 
@@ -151,7 +165,7 @@ public class CreateAppointmentFragment extends Fragment {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 hour = selectedHour;
                 minute = selectedMinute;
-                btnTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+                binding.btnHourPicker.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
             }
         };
 
@@ -189,4 +203,7 @@ public class CreateAppointmentFragment extends Fragment {
             return row;
         }
     }
+
+
+
 }

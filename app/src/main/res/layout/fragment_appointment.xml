@@ -39,13 +39,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="Tracking number"
-                    android:text=""
                     android:inputType="number"
-                    android:fontFamily="@font/fredokamedium"
                     android:textSize="25sp"
                     android:gravity="center"
                     android:ems="10">
-                    <requestFocus/>
+
                 </EditText>
 
         </androidx.cardview.widget.CardView>
@@ -92,18 +90,23 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="320dp"
-            android:layout_height="225dp"
+            android:layout_height="wrap_content"
             app:cardCornerRadius="15dp"
             android:layout_gravity="center"
             android:layout_marginTop="22dp"
             android:background="@color/white">
 
-            <ListView
-                android:id="@+id/listview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<!--            <ListView-->
+<!--                android:id="@+id/listview"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
 
-            </ListView>
+<!--            </ListView>-->
+
+            <Spinner
+                android:id="@+id/spinnerCreate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </androidx.cardview.widget.CardView>
 

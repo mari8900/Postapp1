@@ -7,7 +7,7 @@
     <item
         android:id="@+id/createAppt"
         android:title="CREATE APPT"
-        android:icon="@drawable/ic_date"/>
+        android:icon="@drawable/menu_date"/>
     <item
         android:id="@+id/profile"
         android:title="ACCOUNT"

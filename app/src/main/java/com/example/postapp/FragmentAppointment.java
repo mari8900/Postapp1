@@ -35,7 +35,6 @@ public class FragmentAppointment extends Fragment {
 
     private int hour, minute;
 
-    ListView listView;
     String[] postalOffices = {"Oficiul Postal 7", "Oficiul Postal 23", "Oficiul Postal 38", "Oficiul Postal 44", "Oficiul Postal 56", "Oficiul Postal 67", "Oficiul Postal 79", "Oficiul Postal 84"};
     String[] addresses = {"Sos. Giurgiului 119", "Str Romancierilor 1", "Str. Teiul Doamnei 19", "Str. Gheorghe Sincai 2", "Calea Crangasi 23", "Calea Plevnei 46-48", "Calea Mosilor 314", "Splaiul Independentei 290"};
 
@@ -176,33 +175,7 @@ public class FragmentAppointment extends Fragment {
         timePickerDialog.show();
     }
 
-    class ListViewAdapter extends ArrayAdapter<String> {
-        Context context;
-        String[] postalOffices;
-        String[] addresses;
 
-        ListViewAdapter(Context context, String[] postalOffices, String[] addresses) {
-            super(context, R.layout.row, R.id.tvPoNumber, postalOffices);
-            this.context = context;
-            this.postalOffices = postalOffices;
-            this.addresses = addresses;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View row = layoutInflater.inflate(R.layout.row, parent, false);
-            TextView poNb = row.findViewById(R.id.tvPoNumber);
-            TextView poAddress = row.findViewById(R.id.tvPoAddress);
-
-            poNb.setText(postalOffices[position]);
-            poAddress.setText(addresses[position]);
-
-            return row;
-        }
-    }
 
 
 

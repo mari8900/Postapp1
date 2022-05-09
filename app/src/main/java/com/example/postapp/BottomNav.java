@@ -5,19 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
-
 import com.example.postapp.databinding.ActivityBottomNavBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import np.com.susanthapa.curved_bottom_navigation.CbnMenuItem;
-import np.com.susanthapa.curved_bottom_navigation.CurvedBottomNavigationView;
 
 public class BottomNav extends AppCompatActivity {
 
@@ -32,7 +22,7 @@ public class BottomNav extends AppCompatActivity {
 
         CbnMenuItem[] menuItems = new CbnMenuItem[]{
                 new CbnMenuItem(R.drawable.ic_home, R.drawable.ic_home_anim, R.id.homeFragment),
-                new CbnMenuItem(R.drawable.ic_add, R.drawable.ic_add_anim, R.id.fragmentAppointment),
+                new CbnMenuItem(R.drawable.menu_statistics, R.drawable.menu_statistics_animated, R.id.fragmentAppointment),
                 new CbnMenuItem(R.drawable.ic_account, R.drawable.ic_account_anim, R.id.fragmentAccount)
         };
 

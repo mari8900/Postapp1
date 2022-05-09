@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.postapp.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,15 +26,18 @@ public class FragmentHome extends Fragment {
     private DatabaseReference reference;
     private String userID;
 
+    private FragmentHomeBinding binding;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater);
+
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        TextView tvWelcome = (TextView) getView().findViewById(R.id.tvWelcome);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -46,7 +50,7 @@ public class FragmentHome extends Fragment {
 
                 if (userProfile != null) {
                     String fullName = userProfile.name;
-                    tvWelcome.setText("Welcome, " + fullName + "!");
+                    binding.tvWelcome.setText("Welcome, " + fullName + "!");
                 }
             }
 

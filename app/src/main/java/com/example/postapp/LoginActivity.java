@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Patterns;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.postapp.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,33 +24,44 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView register, forgotPassword;
-    private EditText etMail, etPassword;
-    private Button btnLogin;
+    private ActivityLoginBinding binding;
 
     private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        register = findViewById(R.id.textviewRegister);
-        register.setOnClickListener(this);
-
-        btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(this);
-
-        etMail = findViewById(R.id.etLoginEmail);
-        etPassword = findViewById(R.id.etLoginPass);
-
-        progressBar = findViewById(R.id.progressBar);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
 
-        forgotPassword = findViewById(R.id.textviewForgotPass);
-        forgotPassword.setOnClickListener(this);
+        listeners();
+    }
+
+    private void listeners() {
+        binding.etLoginEmail.setOnFocusChangeListener((view, b) -> {
+            if(b) {
+                binding.etLoginEmail.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
+            }
+            else {
+                binding.etLoginEmail.getCompoundDrawables()[0].setTint(Color.GRAY);
+            }
+
+        });
+
+        binding.etLoginPass.setOnFocusChangeListener((view, b) -> {
+            if(b) {
+                binding.etLoginPass.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
+            }
+            else {
+                binding.etLoginPass.getCompoundDrawables()[0].setTint(Color.GRAY);
+            }
+
+        });
+
+        binding.etLoginEmail.setText("nicolaiciucmaria19@stud.ase.ro");
+        binding.etLoginPass.setText("123456");
     }
 
     @Override
@@ -67,34 +80,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLogin() {
-        String email = etMail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        String email = binding.etLoginEmail.getText().toString().trim();
+        String password = binding.etLoginPass.getText().toString().trim();
 
         if(email.isEmpty()) {
-            etMail.setError("Email is required!");
-            etMail.requestFocus();
+            binding.etLoginEmail.setError("Email is required!");
+            binding.etLoginEmail.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etMail.setError("Please enter a valid email");
-            etMail.requestFocus();
+            binding.etLoginEmail.setError("Please enter a valid email");
+            binding.etLoginEmail.requestFocus();
             return;
         }
 
         if(password.isEmpty()) {
-            etPassword.setError("Password is required!");
-            etPassword.requestFocus();
+            binding.etLoginPass.setError("Password is required!");
+            binding.etLoginPass.requestFocus();
             return;
         }
 
         if(password.length() < 6) {
-            etPassword.setError("Password must be at least 6 characters");
-            etPassword.requestFocus();
+            binding.etLoginPass.setError("Password must be at least 6 characters");
+            binding.etLoginPass.requestFocus();
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
         //progressBar.getProgressDrawable().setColorFilter(Color.rgb(0, 43, 127), android.graphics.PorterDuff.Mode.SRC_IN);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -113,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login! Please check your credentials", Toast.LENGTH_LONG).show();
                 }
-                progressBar.setVisibility(View.GONE);
+                binding.progressBar.setVisibility(View.GONE);
             }
         });
     }

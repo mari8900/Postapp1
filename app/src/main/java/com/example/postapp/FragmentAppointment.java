@@ -2,6 +2,7 @@ package com.example.postapp;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -17,15 +18,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.postapp.databinding.FragmentAppointmentBinding;
+import com.example.postapp.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class FragmentAppointment extends Fragment {
@@ -35,22 +41,17 @@ public class FragmentAppointment extends Fragment {
 
     private int hour, minute;
 
-    String[] postalOffices = {"Oficiul Postal 7", "Oficiul Postal 23", "Oficiul Postal 38", "Oficiul Postal 44", "Oficiul Postal 56", "Oficiul Postal 67", "Oficiul Postal 79", "Oficiul Postal 84"};
-    String[] addresses = {"Sos. Giurgiului 119", "Str Romancierilor 1", "Str. Teiul Doamnei 19", "Str. Gheorghe Sincai 2", "Calea Crangasi 23", "Calea Plevnei 46-48", "Calea Mosilor 314", "Splaiul Independentei 290"};
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         binding = FragmentAppointmentBinding.inflate(inflater);
 
-        initDatePicker();
 
         binding.btnDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDatePicker();
+                showDateDialog();
             }
         });
 
@@ -80,92 +81,47 @@ public class FragmentAppointment extends Fragment {
         return binding.getRoot();
     }
 
-    private String getTodaysDate() {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        month = month + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
-    }
+    private void showDateDialog() {
 
-    private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String date = makeDateString(day, month, year);
-                binding.btnDatePicker.setText(date);
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.calendar_view);
+
+
+        CalendarView calendarView =
+                dialog.findViewById(R.id.calendar_view);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendarView.setMinDate(calendar.getTimeInMillis() - 1000);
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + Utils.appointmentDays);
+        calendarView.setMaxDate(calendar.getTimeInMillis());
+
+        calendarView.setOnDateChangeListener((calendarView1, i, i1, i2) -> {
+            calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - Utils.appointmentDays);
+            calendar.set(Calendar.YEAR, i);
+            calendar.set(Calendar.MONTH, i1);
+            calendar.set(Calendar.DAY_OF_MONTH, i2);
+            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ){
+                Toast.makeText(getContext(), "Posta romana nu lucreaza in weekend", Toast.LENGTH_SHORT).show();
+            } else {
+                SimpleDateFormat data = new SimpleDateFormat("EEEE-dd-MM");
+                String dataString = data.format(new Date(calendar.getTimeInMillis()));
+
+                binding.btnDatePicker.setText(dataString);
+                dialog.dismiss();
             }
-        };
 
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+        });
 
-        int style = AlertDialog.THEME_HOLO_LIGHT;
+        dialog.show();
 
-        datePickerDialog = new DatePickerDialog(getActivity(), style, dateSetListener, year, month, day);
-    }
-
-    private String makeDateString(int day, int month, int year) {
-        return day + " " + getMonthFormat(month) + " " + year;
-    }
-
-    private String getMonthFormat(int month) {
-        if(month == 1) {
-            return "Ian";
-        }
-        if(month == 2) {
-            return "Feb";
-        }
-        if(month == 3) {
-            return "Mar";
-        }
-        if(month == 4) {
-            return "Apr";
-        }
-        if(month == 5) {
-            return "Mai";
-        }
-        if(month == 6) {
-            return "Iun";
-        }
-        if(month == 7) {
-            return "Iul";
-        }
-        if(month == 8) {
-            return "Aug";
-        }
-        if(month == 9) {
-            return "Sep";
-        }
-        if(month == 10) {
-            return "Oct";
-        }
-        if(month == 11) {
-            return "Noi";
-        }
-        if(month == 12) {
-            return "Dec";
-        }
-
-        return "Ian";
-    }
-
-    public void openDatePicker() {
-        datePickerDialog.show();
     }
 
     public void openTimePicker(View view) {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                hour = selectedHour;
-                minute = selectedMinute;
-                binding.btnHourPicker.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
-            }
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
+            hour = selectedHour;
+            minute = selectedMinute;
+            binding.btnHourPicker.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
         };
 
         int style = AlertDialog.THEME_HOLO_LIGHT;

@@ -7,6 +7,19 @@ public class Appointment {
     private String currentPO;
     private Date pickupDate;
     private String pickupHour;
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public Appointment() {
+
+    }
 
     public Appointment(int trackingNumber, String currentPO, Date pickupDate, String pickupHour) {
         this.trackingNumber = trackingNumber;

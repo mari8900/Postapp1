@@ -1,6 +1,6 @@
 package com.example.postapp.utils;
 
-public class Utils {
+public class Constants {
 
     // max 14 days to keep parcel at the postal office
     public static int appointmentDays = 14;
@@ -22,4 +22,6 @@ public class Utils {
             "Calea Plevnei 46-48",
             "Calea Mosilor 314",
             "Splaiul Independentei 290"};
+
+    public static String databaseReference = "postapp-ad2d5-default-rtdb";
 }

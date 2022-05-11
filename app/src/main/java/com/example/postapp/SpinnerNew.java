@@ -7,11 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.postapp.utils.Utils;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
+import com.example.postapp.utils.Constants;
 
 public class SpinnerNew extends BaseAdapter {
 
@@ -22,7 +18,7 @@ public class SpinnerNew extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Utils.addressList.length;
+        return Constants.addressList.length;
     }
 
     @Override
@@ -41,8 +37,8 @@ public class SpinnerNew extends BaseAdapter {
         TextView textOP = view.findViewById(R.id.textSpinner);
         TextView textAddress = view.findViewById(R.id.textAddressSpinner);
 
-        textOP.setText(Utils.opList[i]);
-        textAddress.setText(Utils.addressList[i]);
+        textOP.setText(Constants.opList[i]);
+        textAddress.setText(Constants.addressList[i]);
 
         return view;
     }

@@ -18,4 +18,6 @@
     <dimen name="cbn_fab_top_offset">8dp</dimen>
     <dimen name="text_size">25sp</dimen>
     <dimen name="small_text">20sp</dimen>
+    <dimen name="margine_20">20dp</dimen>
+    <dimen name="corners_15">15dp</dimen>
 </resources>

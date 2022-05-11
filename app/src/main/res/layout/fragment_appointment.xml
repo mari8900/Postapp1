@@ -1,118 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="match_parent"
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView4"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/fundalcreate"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <TextView
+        android:id="@+id/tvCreateYourAppt"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/fundalcreate"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintVertical_chainStyle="spread"
+        android:fontFamily="@font/fredokamedium"
+        android:text="Book your appointment!"
+        android:textColor="@color/RomaniaBlue"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cardviewParent"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardviewParent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/RomaniaBlue"
+        app:cardCornerRadius="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCreateYourAppt">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="320dp"
-            android:layout_height="55dp"
-            app:cardCornerRadius="15dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:backgroundTint="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewTRACKING"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margine_20"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="@dimen/corners_15">
 
                 <EditText
                     android:id="@+id/etTrackingNb"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Tracking number"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:drawableStart="@drawable/ic_code"
                     android:fontFamily="@font/fredokamedium"
-                    android:inputType="number"
-                    android:textSize="25sp"
                     android:gravity="center"
-                    android:ems="10">
+                    android:hint="Tracking number"
+                    android:inputType="number"
+                    android:textSize="25sp"/>
 
-                </EditText>
+            </androidx.cardview.widget.CardView>
 
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="320dp"
-            android:layout_height="55dp"
-            app:cardCornerRadius="15dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:backgroundTint="@color/white">
-
-
-            <Button
-                android:id="@+id/btnDatePicker"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewDATE"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Select date"
-                android:fontFamily="@font/fredokamedium"
-                android:textSize="25sp"
-                style="?android:spinnerStyle"
-                android:gravity="center"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margine_20"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="15dp">
 
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/btnDatePicker"
+                    style="?android:spinnerStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/menu_date"
+                    android:fontFamily="@font/fredokamedium"
+                    android:gravity="center"
+                    android:hint="Select date"
+                    android:padding="10dp"
+                    android:textSize="25sp" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="320dp"
-            android:layout_height="55dp"
-            app:cardCornerRadius="15dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:background="@color/white">
+            </androidx.cardview.widget.CardView>
 
-            <Button
-                android:id="@+id/btnHourPicker"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewTIME"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Select hour"
-                android:fontFamily="@font/fredokamedium"
-                android:textSize="25sp"
-                style="?android:spinnerStyle"
-                android:gravity="center"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margine_20"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp">
 
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/btnHourPicker"
+                    style="?android:spinnerStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_clock"
+                    android:fontFamily="@font/fredokamedium"
+                    android:gravity="center"
+                    android:hint="Select hour"
+                    android:padding="10dp"
+                    android:textSize="25sp" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="22dp"
-            android:background="@color/white">
+            </androidx.cardview.widget.CardView>
 
-<!--            <ListView-->
-<!--                android:id="@+id/listview"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--            </ListView>-->
-
-            <Spinner
-                android:id="@+id/spinnerCreate"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margine_20"
+                android:layout_marginBottom="@dimen/margine_20"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp">
 
-        </androidx.cardview.widget.CardView>
+                <Spinner
+                    android:id="@+id/spinnerCreate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-    </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
-</FrameLayout>
+
+    <Button
+        android:id="@+id/btnCreateAppt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:fontFamily="@font/fredokamedium"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardviewParent"/>
+
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--            android:id="@+id/cardviewTRACKING"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginTop="25dp"-->
+    <!--            android:backgroundTint="@color/white"-->
+    <!--            app:cardCornerRadius="15dp"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/tvCreateYourAppt">-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/etTrackingNb"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:drawableStart="@drawable/ic_code"-->
+    <!--                android:ems="10"-->
+    <!--                android:fontFamily="@font/fredokamedium"-->
+    <!--                android:gravity="center"-->
+    <!--                android:hint="Tracking number"-->
+    <!--                android:inputType="number"-->
+    <!--                android:padding="10dp"-->
+    <!--                android:textSize="25sp">-->
+
+    <!--            </EditText>-->
+
+    <!--        </androidx.cardview.widget.CardView>-->
+
+    <!--        <androidx.cardview.widget.CardView-->
+    <!--            android:id="@+id/cardviewDATE"-->
+    <!--            android:layout_width="320dp"-->
+    <!--            android:layout_height="55dp"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginTop="25dp"-->
+    <!--            android:backgroundTint="@color/white"-->
+    <!--            app:cardCornerRadius="15dp"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/cardviewTRACKING">-->
+
+
+    <!--            <Button-->
+    <!--                android:id="@+id/btnDatePicker"-->
+    <!--                style="?android:spinnerStyle"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:drawableStart="@drawable/menu_date"-->
+    <!--                android:fontFamily="@font/fredokamedium"-->
+    <!--                android:gravity="center"-->
+    <!--                android:hint="Select date"-->
+    <!--                android:padding="10dp"-->
+    <!--                android:textSize="25sp" />-->
+
+    <!--        </androidx.cardview.widget.CardView>-->
+
+    <!--        <androidx.cardview.widget.CardView-->
+    <!--            android:id="@+id/cardviewTIME"-->
+    <!--            android:layout_width="320dp"-->
+    <!--            android:layout_height="55dp"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginTop="25dp"-->
+    <!--            android:background="@color/white"-->
+    <!--            app:cardCornerRadius="15dp"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/cardviewDATE">-->
+
+    <!--            <Button-->
+    <!--                android:id="@+id/btnHourPicker"-->
+    <!--                style="?android:spinnerStyle"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:drawableStart="@drawable/ic_clock"-->
+    <!--                android:fontFamily="@font/fredokamedium"-->
+    <!--                android:gravity="center"-->
+    <!--                android:hint="Select hour"-->
+    <!--                android:padding="10dp"-->
+    <!--                android:textSize="25sp" />-->
+
+    <!--        </androidx.cardview.widget.CardView>-->
+
+    <!--        <androidx.cardview.widget.CardView-->
+    <!--            android:layout_width="320dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginTop="22dp"-->
+    <!--            android:background="@color/white"-->
+    <!--            app:cardCornerRadius="15dp"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/cardviewTIME">-->
+
+    <!--            <Spinner-->
+    <!--                android:id="@+id/spinnerCreate"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content" />-->
+
+    <!--        </androidx.cardview.widget.CardView>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,20 +1,18 @@
-package com.example.postapp;
+package com.example.postapp.authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.postapp.BottomNav;
+import com.example.postapp.R;
 import com.example.postapp.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,24 +38,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void listeners() {
-        binding.etLoginEmail.setOnFocusChangeListener((view, b) -> {
-            if(b) {
-                binding.etLoginEmail.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
+        binding.etLoginEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutLoginUser.setStartIconTintList(ColorStateList.valueOf(color));
             }
-            else {
-                binding.etLoginEmail.getCompoundDrawables()[0].setTint(Color.GRAY);
-            }
-
         });
 
-        binding.etLoginPass.setOnFocusChangeListener((view, b) -> {
-            if(b) {
-                binding.etLoginPass.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
+        binding.etLoginPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutLoginPass.setStartIconTintList(ColorStateList.valueOf(color));
             }
-            else {
-                binding.etLoginPass.getCompoundDrawables()[0].setTint(Color.GRAY);
-            }
-
         });
 
         binding.etLoginEmail.setText("nicolaiciucmaria19@stud.ase.ro");

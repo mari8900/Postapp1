@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".authentication.LoginActivity">
 
     <ImageView
         android:id="@+id/logo"
@@ -16,63 +16,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etLoginEmail"
-        android:layout_width="375dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:drawableStart="@drawable/custom_email_icon"
-        android:drawablePadding="10dp"
-        android:background="@drawable/custom_input"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutLoginUser"
+        style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_height="wrap_content"
         android:hint="Email"
-        android:inputType="text"
-        android:textSize="24sp"
-        android:fontFamily="@font/fredokamedium"
+        app:startIconDrawable="@drawable/ic_email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
-    <EditText
-        android:id="@+id/etLoginPass"
-        android:layout_width="375dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
-        android:drawableStart="@drawable/custom_lock_icon"
-        android:drawablePadding="10dp"
-        android:background="@drawable/custom_input"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etLoginEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fredokamedium"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutLoginPass"
+        style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_height="wrap_content"
         android:hint="Password"
-        android:inputType="textPassword"
-        android:textSize="24sp"
-        android:fontFamily="@font/fredokamedium"
+        app:startIconDrawable="@drawable/ic_lock"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLoginEmail" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLoginUser">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etLoginPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fredokamedium"
+            android:inputType="textPassword"
+            android:textSize="20sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="365dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
         android:background="@drawable/custom_button"
         android:text="LOGIN"
         android:onClick="onClick"
+        android:paddingStart="110dp"
+        android:paddingEnd="110dp"
         android:fontFamily="@font/fredokamedium"
         android:textColor="#fff"
         android:textSize="29sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLoginPass" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLoginPass" />
 
     <TextView
         android:id="@+id/textviewForgotPass"
-        android:layout_width="161dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:onClick="onClick"
         android:fontFamily="@font/fredokamedium"
@@ -85,9 +98,10 @@
 
     <TextView
         android:id="@+id/textviewRegister"
-        android:layout_width="161dp"
-        android:layout_height="42dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
         android:onClick="onClick"
         android:fontFamily="@font/fredokamedium"
         android:gravity="center"
@@ -95,8 +109,6 @@
         android:textColor="@color/RomaniaBlue"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.901"
-        app:layout_constraintStart_toEndOf="@+id/textviewForgotPass"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <ProgressBar

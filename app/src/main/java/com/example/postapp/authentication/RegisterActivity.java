@@ -1,18 +1,18 @@
-package com.example.postapp;
+package com.example.postapp.authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.postapp.R;
+import com.example.postapp.User;
 import com.example.postapp.databinding.ActivityRegisterBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         mAuth = FirebaseAuth.getInstance();
 
+        listeners();
     }
 
     @Override
@@ -139,5 +140,47 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 });
+    }
+
+    private void listeners() {
+        binding.etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutName.setStartIconTintList(ColorStateList.valueOf(color));
+            }
+        });
+
+        binding.etCNP.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutCNP.setStartIconTintList(ColorStateList.valueOf(color));
+            }
+        });
+
+        binding.etAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutResidence.setStartIconTintList(ColorStateList.valueOf(color));
+            }
+        });
+
+        binding.etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color));
+            }
+        });
+
+        binding.etPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutPassword.setStartIconTintList(ColorStateList.valueOf(color));
+            }
+        });
     }
 }

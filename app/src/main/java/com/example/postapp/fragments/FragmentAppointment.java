@@ -1,4 +1,4 @@
-package com.example.postapp;
+package com.example.postapp.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -20,6 +20,10 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.postapp.Appointment;
+import com.example.postapp.ParcelInfo;
+import com.example.postapp.R;
+import com.example.postapp.SpinnerNew;
 import com.example.postapp.databinding.FragmentAppointmentBinding;
 import com.example.postapp.utils.Constants;
 import com.google.firebase.database.DataSnapshot;
@@ -107,11 +111,11 @@ public class FragmentAppointment extends Fragment {
                 trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
 
                 if(binding.etTrackingNb.getText().toString().equals(""))
-                    binding.etTrackingNb.setError("Completeaza codul de urmarire!");
+                    binding.etTrackingNb.setError("Fill in package code");
                 else if(binding.btnDatePicker.getText().toString().isEmpty())
-                    binding.btnDatePicker.setError("Selecteaza data dorita!");
+                    binding.btnDatePicker.setError("Date must be selected");
                 else if(binding.btnHourPicker.getText().toString().isEmpty())
-                    binding.btnHourPicker.setError("Selecteaza ora dorita!");
+                    binding.btnHourPicker.setError("Hour must be selected");
                 else
                 {
                     trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
@@ -140,12 +144,12 @@ public class FragmentAppointment extends Fragment {
 
                                         }
                                         if(usedTrackingNbList.contains(trackingNb)) {
-                                            Toast.makeText(getContext(), "Exista deja o programare pentru acest numar!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "There is an appointment created for this code!", Toast.LENGTH_SHORT).show();
                                         }
                                         else {
                                             appointment.setUid(refAppt.child("Appointments").push().getKey());
                                             refAppt.child(appointment.getUid()).setValue(appointment);
-                                            Toast.makeText(getContext(), "Programare creata cu succes!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Appointment created successfully!", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
@@ -157,7 +161,7 @@ public class FragmentAppointment extends Fragment {
                                 });
                             }
                             else {
-                                Toast.makeText(getContext(), "Codul de urmarire nu exista in sistem.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Package code does not exist in the system.", Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override
@@ -192,7 +196,7 @@ public class FragmentAppointment extends Fragment {
             calendar.set(Calendar.MONTH, i1);
             calendar.set(Calendar.DAY_OF_MONTH, i2);
             if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ){
-                Toast.makeText(getContext(), "Posta Romana nu lucreaza in weekend", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Posta Romana does not work in the weekend", Toast.LENGTH_SHORT).show();
             } else {
                 pickupDate = calendar.getTime();
                 SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
@@ -248,7 +252,7 @@ public class FragmentAppointment extends Fragment {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
                 if(i < 8 || i > 19) {
-                    Toast.makeText(getContext(), "Programul de lucru este intre 08:00 - 19:00", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Working hours are between 08:00 - 19:00", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     pickupHour = String.format(Locale.getDefault(), "%02d:%02d", i, i1);

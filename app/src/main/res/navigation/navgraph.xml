@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.postapp.FragmentHome"
+        android:name="com.example.postapp.fragments.FragmentHome"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/fragmentAppointment"
-        android:name="com.example.postapp.FragmentAppointment"
+        android:name="com.example.postapp.fragments.FragmentAppointment"
         android:label="fragment_createappointment"
         tools:layout="@layout/fragment_appointment" />
     <fragment
         android:id="@+id/fragmentAccount"
-        android:name="com.example.postapp.FragmentAccount"
+        android:name="com.example.postapp.fragments.FragmentAccount"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" />
 </navigation>

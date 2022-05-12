@@ -24,16 +24,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ForgotPassword"
+            android:name=".authentication.ForgotPassword"
             android:exported="true" />
         <activity
             android:name=".ProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".authentication.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".authentication.LoginActivity"
             android:exported="true" >
 
         </activity>

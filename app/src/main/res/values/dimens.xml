@@ -20,4 +20,5 @@
     <dimen name="small_text">20sp</dimen>
     <dimen name="margine_20">20dp</dimen>
     <dimen name="corners_15">15dp</dimen>
+    <dimen name="dimen_70">70dp</dimen>
 </resources>

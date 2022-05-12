@@ -22,11 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ImageView logo;
-    private Button btnRegister;
     private ActivityRegisterBinding binding;
-    private EditText etName, etCNP, etAddress, etEmail, etPassword;
-    private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
 
@@ -34,95 +30,86 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        logo = findViewById(R.id.imageView);
-        logo.setOnClickListener(this);
+        binding.btnRegister.setOnClickListener(this);
 
-        etName = findViewById(R.id.etName);
-        etCNP = findViewById(R.id.etCNP);
-        etAddress = findViewById(R.id.etAddress);
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-
-        btnRegister = findViewById(R.id.btnRegister);
-        btnRegister.setOnClickListener(this);
-
-        progressBar = findViewById(R.id.progressBar2);
+        binding.tvAlreadyHaveAcc.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.id.logo:
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
             case R.id.btnRegister:
                 registerUser();
                 break;
+            case R.id.tvAlreadyHaveAcc:
+                startActivity(new Intent(this, LoginActivity.class));
         }
     }
 
     private void registerUser() {  // method for validating the fields
 
-        String name = etName.getText().toString().trim();
-        String cnp = etCNP.getText().toString().trim();
-        String address = etAddress.getText().toString().trim();
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        String name = binding.etName.getText().toString().trim();
+        String cnp = binding.etCNP.getText().toString().trim();
+        String address = binding.etAddress.getText().toString().trim();
+        String email = binding.etEmail.getText().toString().trim();
+        String password = binding.etPassword.getText().toString().trim();
 
         if(name.isEmpty()) {
-            etName.setError("Full name is required");
-            etName.requestFocus();
+            binding.etName.setError("Full name is required");
+            binding.etName.requestFocus();
             return;
         }
 
         if(cnp.isEmpty()) {
-            etCNP.setError("CNP is required");
-            etCNP.requestFocus();
+            binding.etCNP.setError("CNP is required");
+            binding.etCNP.requestFocus();
             return;
         }
 
 
         if(address.isEmpty()) {
-            etAddress.setError("Residence address is required");
-            etAddress.requestFocus();
+            binding.etAddress.setError("Residence address is required");
+            binding.etAddress.requestFocus();
             return;
         }
 
         if(address.length() < 15) {
-            etAddress.setError("Residence address cannot be shorter than 15 characters");
-            etAddress.requestFocus();
+            binding.etAddress.setError("Residence address cannot be shorter than 15 characters");
+            binding.etAddress.requestFocus();
             return;
         }
 
         if(email.isEmpty()) {
-            etEmail.setError("Email is required");
-            etEmail.requestFocus();
+            binding.etEmail.setError("Email is required");
+            binding.etEmail.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Please provide a valid email address");
-            etEmail.requestFocus();
+            binding.etEmail.setError("Please provide a valid email address");
+            binding.etEmail.requestFocus();
             return;
         }
 
         if(password.isEmpty()) {
-            etPassword.setError("Password must be set");
-            etPassword.requestFocus();
+            binding.etPassword.setError("Password must be set");
+            binding.etPassword.requestFocus();
             return;
         }
 
         if(password.length() < 6) {
-            etPassword.setError("Password length is min 6 characters");
-            etPassword.requestFocus();
+            binding.etPassword.setError("Password length is min 6 characters");
+            binding.etPassword.requestFocus();
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar2.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -137,18 +124,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
                                         Toast.makeText(RegisterActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
-                                        progressBar.setVisibility(View.GONE);
+                                        binding.progressBar2.setVisibility(View.GONE);
 
                                         // redirect to login layout
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
-                                        progressBar.setVisibility(View.GONE);
+                                        binding.progressBar2.setVisibility(View.GONE);
                                     }
                                 }
                             });
                         } else {
                             Toast.makeText(RegisterActivity.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
-                            progressBar.setVisibility(View.GONE);
+                            binding.progressBar2.setVisibility(View.GONE);
                         }
                     }
                 });

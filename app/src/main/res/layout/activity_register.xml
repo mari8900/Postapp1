@@ -8,108 +8,253 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="409dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="196dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logopostapp" />
+        app:srcCompat="@drawable/register" />
 
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="328dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/custom_input"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:hint="Full Name"
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A few clicks away\nfrom creating\nyour Postapp\nprofile"
         android:fontFamily="@font/fredokamedium"
-        android:inputType="text"
-        android:textSize="24sp"
+        android:textSize="29sp"
+        android:textColor="@color/RomaniaBlue"
+        android:textStyle="bold"
+        android:paddingStart="32dp"
+        android:layout_marginTop="19dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <EditText
-        android:id="@+id/etCNP"
-        android:layout_width="328dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/custom_input"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:hint="CNP"
-        android:fontFamily="@font/fredokamedium"
-        android:inputType="number"
-        android:textSize="24sp"
+    <LinearLayout
+        android:id="@+id/linearLayoutRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:paddingStart="@dimen/dimen_70"
+        android:paddingEnd="@dimen/dimen_70"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etName" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegister">
 
-    <EditText
-        android:id="@+id/etAddress"
-        android:layout_width="328dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/custom_input"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:hint="Residence Address"
-        android:fontFamily="@font/fredokamedium"
-        android:inputType="textPostalAddress"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCNP" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:layout_marginTop="5dp"
+            app:startIconDrawable="@drawable/ic_person">
 
-    <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="328dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/custom_input"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:hint="Email Address"
-        android:fontFamily="@font/fredokamedium"
-        android:inputType="textEmailAddress"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fredokamedium"
+                android:textSize="20sp"/>
 
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="328dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/custom_input"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:hint="Password"
-        android:fontFamily="@font/fredokamedium"
-        android:inputType="textPassword"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CNP"
+            android:layout_marginTop="5dp"
+            app:startIconDrawable="@drawable/ic_code">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCNP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fredokamedium"
+                android:textSize="20sp"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Residence Address"
+            android:layout_marginTop="5dp"
+            app:startIconDrawable="@drawable/ic_residenceaddress">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fredokamedium"
+                android:textSize="20sp"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="Email Address"
+            app:startIconDrawable="@drawable/ic_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fredokamedium"
+                android:textSize="20sp"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="Password"
+            app:startIconDrawable="@drawable/ic_lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fredokamedium"
+                android:textSize="20sp"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <EditText-->
+<!--            android:id="@+id/etName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="17dp"-->
+<!--            android:background="@drawable/custom_input"-->
+<!--            android:paddingStart="@dimen/margine_20"-->
+<!--            android:paddingEnd="@dimen/margine_20"-->
+<!--            android:paddingTop="5dp"-->
+<!--            android:paddingBottom="5dp"-->
+<!--            android:hint="Full Name"-->
+<!--            android:fontFamily="@font/fredokamedium"-->
+<!--            android:inputType="text"-->
+<!--            android:textSize="24sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/etCNP"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="17dp"-->
+<!--            android:background="@drawable/custom_input"-->
+<!--            android:paddingStart="@dimen/margine_20"-->
+<!--            android:paddingEnd="@dimen/margine_20"-->
+<!--            android:paddingTop="5dp"-->
+<!--            android:paddingBottom="5dp"-->
+<!--            android:hint="CNP"-->
+<!--            android:fontFamily="@font/fredokamedium"-->
+<!--            android:inputType="number"-->
+<!--            android:textSize="24sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/etName" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/etAddress"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="17dp"-->
+<!--            android:background="@drawable/custom_input"-->
+<!--            android:paddingStart="@dimen/margine_20"-->
+<!--            android:paddingEnd="@dimen/margine_20"-->
+<!--            android:paddingTop="5dp"-->
+<!--            android:paddingBottom="5dp"-->
+<!--            android:hint="Residence Address"-->
+<!--            android:fontFamily="@font/fredokamedium"-->
+<!--            android:inputType="textPostalAddress"-->
+<!--            android:textSize="24sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/etCNP" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/etEmail"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="17dp"-->
+<!--            android:background="@drawable/custom_input"-->
+<!--            android:paddingStart="@dimen/margine_20"-->
+<!--            android:paddingEnd="@dimen/margine_20"-->
+<!--            android:paddingTop="5dp"-->
+<!--            android:paddingBottom="5dp"-->
+<!--            android:hint="Email Address"-->
+<!--            android:fontFamily="@font/fredokamedium"-->
+<!--            android:inputType="textEmailAddress"-->
+<!--            android:textSize="24sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/etAddress" />-->
+
+
+<!--        <EditText-->
+<!--            android:id="@+id/etPassword"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="17dp"-->
+<!--            android:layout_marginBottom="17dp"-->
+<!--            android:background="@drawable/custom_input"-->
+<!--            android:paddingStart="@dimen/margine_20"-->
+<!--            android:paddingEnd="@dimen/margine_20"-->
+<!--            android:paddingTop="5dp"-->
+<!--            android:paddingBottom="5dp"-->
+<!--            android:hint="Password"-->
+<!--            android:fontFamily="@font/fredokamedium"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:textSize="24sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/etEmail" />-->
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="327dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:background="@drawable/custom_button"
-        android:text="Register user"
+        android:text="Register"
+        android:paddingStart="35dp"
+        android:paddingEnd="35dp"
         android:fontFamily="@font/fredokamedium"
         android:textStyle="bold"
         android:textColor="#fff"
         android:textSize="29sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRegister" />
+
+    <TextView
+        android:id="@+id/tvAlreadyHaveAcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Already have an account? Log in."
+        android:fontFamily="@font/fredokamedium"
+        android:textSize="21sp"
+        android:textColor="@color/RomaniaBlue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister"/>
 
     <ProgressBar
         android:id="@+id/progressBar2"

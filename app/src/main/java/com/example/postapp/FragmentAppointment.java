@@ -44,7 +44,6 @@ public class FragmentAppointment extends Fragment {
     private String pickupHour;
     private String postalOffice;
     private Calendar calendar;
-    private List<Appointment> appointmentList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -68,7 +67,7 @@ public class FragmentAppointment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                binding.etTrackingNb.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
+                binding.etTrackingNb.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.Green));
             }
         });
 
@@ -91,7 +90,6 @@ public class FragmentAppointment extends Fragment {
         binding.spinnerCreate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Log.e("Spinner", "selected pos: " + i);
                 postalOffice = Constants.opList[i];
             }
 
@@ -105,8 +103,9 @@ public class FragmentAppointment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                // Log.e("firebase", "snapshot result" + x.getValue());
+
                 trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
+
                 if(binding.etTrackingNb.getText().toString().equals(""))
                     binding.etTrackingNb.setError("Completeaza codul de urmarire!");
                 else if(binding.btnDatePicker.getText().toString().isEmpty())
@@ -130,26 +129,23 @@ public class FragmentAppointment extends Fragment {
                             if(trackingNbList.contains(trackingNb)) {
                                 Appointment appointment = new Appointment(trackingNb, postalOffice, pickupDate, pickupHour);
 
-
-                                // DatabaseReference refNew = FirebaseDatabase.getInstance().getReference().child("Appointments");
-
                                 DatabaseReference refAppt = firebaseDatabase.getReference().child("Appointments");
                                 refAppt.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        Log.e("Firebase", "Marime snapshot " + snapshot.getChildrenCount());
+
                                         for (DataSnapshot infoSnapshot : snapshot.getChildren()) {
                                             Appointment apptInfo = infoSnapshot.getValue(Appointment.class);
                                             usedTrackingNbList.add(apptInfo.getTrackingNumber());
-                                            Log.e("Firebase", "Tracking nb folosit " + apptInfo.getTrackingNumber());
+
                                         }
                                         if(usedTrackingNbList.contains(trackingNb)) {
-                                            Toast.makeText(getContext(), "Exista deja o programare pentru acest numar", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Exista deja o programare pentru acest numar!", Toast.LENGTH_SHORT).show();
                                         }
                                         else {
                                             appointment.setUid(refAppt.child("Appointments").push().getKey());
                                             refAppt.child(appointment.getUid()).setValue(appointment);
-                                            Toast.makeText(getContext(), "Programare creata cu succes", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Programare creata cu succes!", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
@@ -161,7 +157,7 @@ public class FragmentAppointment extends Fragment {
                                 });
                             }
                             else {
-                                Toast.makeText(getContext(), "Codul de urmarire nu exista", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Codul de urmarire nu exista in sistem.", Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override
@@ -196,14 +192,14 @@ public class FragmentAppointment extends Fragment {
             calendar.set(Calendar.MONTH, i1);
             calendar.set(Calendar.DAY_OF_MONTH, i2);
             if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ){
-                Toast.makeText(getContext(), "Posta romana nu lucreaza in weekend", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Posta Romana nu lucreaza in weekend", Toast.LENGTH_SHORT).show();
             } else {
                 pickupDate = calendar.getTime();
                 SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
                 String dataString = data.format(new Date(calendar.getTimeInMillis()));
 
                 binding.btnDatePicker.setText(dataString);
-                binding.btnDatePicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
+                binding.btnDatePicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.Green));
                 dialog.dismiss();
             }
 
@@ -259,7 +255,7 @@ public class FragmentAppointment extends Fragment {
                     calendar.set(Calendar.HOUR, i);
                     calendar.set(Calendar.MINUTE, i1);
                     binding.btnHourPicker.setText(pickupHour);
-                    binding.btnHourPicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
+                    binding.btnHourPicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.Green));
                     btnSetDate.setEnabled(true);
                 }
 

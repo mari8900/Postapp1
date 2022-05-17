@@ -49,7 +49,9 @@
             android:layout_height="wrap_content"
             android:hint="Full Name"
             android:layout_marginTop="5dp"
-            app:startIconDrawable="@drawable/ic_person">
+            app:startIconDrawable="@drawable/ic_person"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
@@ -69,7 +71,9 @@
             android:layout_height="wrap_content"
             android:hint="CNP"
             android:layout_marginTop="5dp"
-            app:startIconDrawable="@drawable/ic_code">
+            app:startIconDrawable="@drawable/ic_code"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCNP"
@@ -89,7 +93,9 @@
             android:layout_height="wrap_content"
             android:hint="Residence Address"
             android:layout_marginTop="5dp"
-            app:startIconDrawable="@drawable/ic_residenceaddress">
+            app:startIconDrawable="@drawable/ic_residenceaddress"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etAddress"
@@ -109,7 +115,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="Email Address"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_email"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -129,7 +137,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="Password"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"

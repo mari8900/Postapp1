@@ -27,9 +27,6 @@
             android:name=".authentication.ForgotPassword"
             android:exported="true" />
         <activity
-            android:name=".ProfileActivity"
-            android:exported="true" />
-        <activity
             android:name=".authentication.RegisterActivity"
             android:exported="true" />
         <activity

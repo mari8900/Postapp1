@@ -47,6 +47,7 @@ dependencies {
     implementation 'np.com.susanthapa:curved_bottom_navigation:0.6.5'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+
     def nav_version = "2.4.2"
 
     // Java language implementation
@@ -65,4 +66,5 @@ dependencies {
 
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
 }

@@ -37,27 +37,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         listeners();
     }
 
-    private void listeners() {
-        binding.etLoginEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
-                binding.textInputLayoutLoginUser.setStartIconTintList(ColorStateList.valueOf(color));
-            }
-        });
-
-        binding.etLoginPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
-                binding.textInputLayoutLoginPass.setStartIconTintList(ColorStateList.valueOf(color));
-            }
-        });
-
-        binding.etLoginEmail.setText("nicolaiciucmaria19@stud.ase.ro");
-        binding.etLoginPass.setText("123456");
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -123,5 +102,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 binding.progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void listeners() {
+        binding.etLoginEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutLoginUser.setStartIconTintList(ColorStateList.valueOf(color));
+            }
+        });
+
+        binding.etLoginPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? Color.rgb(0, 43, 127) : Color.GRAY;
+                binding.textInputLayoutLoginPass.setStartIconTintList(ColorStateList.valueOf(color));
+            }
+        });
+
+        binding.etLoginEmail.setText("nicolaiciucmaria19@stud.ase.ro");
+        binding.etLoginPass.setText("123456");
     }
 }

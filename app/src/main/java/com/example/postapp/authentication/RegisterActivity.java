@@ -73,6 +73,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
+        if(cnp.length() < 13) {
+            binding.etCNP.setError("CNP length must be 13 characters");
+            binding.etCNP.requestFocus();
+            return;
+        }
 
         if(address.isEmpty()) {
             binding.etAddress.setError("Residence address is required");

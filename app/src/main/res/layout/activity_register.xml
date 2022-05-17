@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="210dp"
+        android:layout_height="210dp"
         android:layout_marginStart="196dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         android:textSize="29sp"
         android:textColor="@color/RomaniaBlue"
         android:textStyle="bold"
-        android:paddingStart="32dp"
+        android:paddingStart="40dp"
         android:layout_marginTop="19dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -34,7 +34,7 @@
         android:id="@+id/linearLayoutRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="25dp"
         android:paddingStart="@dimen/dimen_70"
         android:paddingEnd="@dimen/dimen_70"
         android:orientation="vertical"

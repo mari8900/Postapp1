@@ -13,7 +13,7 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintVertical_chainStyle="spread"
         android:fontFamily="@font/fredokamedium"
-        android:text="Book your appointment"
+        android:text="Search tracking number"
         android:textColor="@color/RomaniaBlue"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -74,7 +74,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margine_20"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/btnDatePicker"
@@ -97,7 +98,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margine_20"
                 android:background="@color/white"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/btnHourPicker"
@@ -114,13 +116,15 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewSPINNER"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margine_20"
                 android:layout_marginBottom="@dimen/margine_20"
                 android:background="@color/white"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="15dp"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/spinnerCreate"
@@ -128,6 +132,29 @@
                     android:layout_height="wrap_content" />
 
             </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/imgLupa"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_search"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margine_20"
+                android:layout_marginBottom="@dimen/margine_20"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/textViewNotFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tracking number doesn't exist"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/fredokamedium"
+                android:layout_marginBottom="@dimen/margine_20"
+                android:padding="6dp"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -150,6 +177,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardviewParent"/>
+        app:layout_constraintTop_toBottomOf="@+id/cardviewParent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

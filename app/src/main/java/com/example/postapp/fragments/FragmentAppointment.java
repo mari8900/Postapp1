@@ -24,8 +24,11 @@ import com.example.postapp.Appointment;
 import com.example.postapp.ParcelInfo;
 import com.example.postapp.R;
 import com.example.postapp.SpinnerNew;
+import com.example.postapp.User;
 import com.example.postapp.databinding.FragmentAppointmentBinding;
 import com.example.postapp.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,13 +39,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class FragmentAppointment extends Fragment {
 
     private FragmentAppointmentBinding binding;
     private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference reference;
     private Date pickupDate;
     private int trackingNb;
     private String pickupHour;
@@ -57,7 +63,61 @@ public class FragmentAppointment extends Fragment {
         calendar = Calendar.getInstance();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+        reference = firebaseDatabase.getReference();
 
+        listeners();
+
+        return binding.getRoot();
+    }
+
+    private void searchTrackingNo() {
+        trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
+        List<Integer> trackingNbList = new ArrayList<>();
+        List<String> poList = new ArrayList<>();
+
+        reference.child("ParcelInfo").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for (DataSnapshot infoSnapshot : snapshot.getChildren()) {
+                    ParcelInfo parcelInfo = infoSnapshot.getValue(ParcelInfo.class);
+                    trackingNbList.add(parcelInfo.getTrackingNb());
+                    poList.add(parcelInfo.getPostalOffice());
+                }
+
+                if (trackingNbList.contains(trackingNb)) {
+                    setViewCorrectNo();
+
+                    String op = poList.get(trackingNbList.indexOf(trackingNb));
+                    for (int i = 0; i < Constants.opList.length; i++) {
+                        if (Constants.opList[i].equals(op)) {
+                            binding.spinnerCreate.setSelection(i);
+                            break;
+                        }
+                    }
+
+                } else {
+                    binding.textViewNotFound.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException(); // NEVER ignore errors
+            }
+        });
+    }
+
+    private void setViewCorrectNo() {
+        binding.cardviewDATE.setVisibility(View.VISIBLE);
+        binding.cardviewTIME.setVisibility(View.VISIBLE);
+        binding.cardviewSPINNER.setVisibility(View.VISIBLE);
+        binding.btnCreateAppt.setVisibility(View.VISIBLE);
+        binding.imgLupa.setVisibility(View.GONE);
+        binding.tvCreateYourAppt.setText("Book your appointment");
+    }
+
+    private void listeners() {
         binding.etTrackingNb.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -71,23 +131,13 @@ public class FragmentAppointment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                binding.etTrackingNb.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.Green));
+                binding.etTrackingNb.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
             }
         });
 
-        binding.btnDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDateDialog();
-            }
-        });
+        binding.btnDatePicker.setOnClickListener(view -> showDateDialog());
 
-        binding.btnHourPicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showTimePickerDialog();
-            }
-        });
+        binding.btnHourPicker.setOnClickListener(view -> showTimePickerDialog());
 
         SpinnerNew spinnerAdapter = new SpinnerNew(getContext());
         binding.spinnerCreate.setAdapter(spinnerAdapter);
@@ -103,78 +153,107 @@ public class FragmentAppointment extends Fragment {
             }
         });
 
-        binding.btnCreateAppt.setOnClickListener(new View.OnClickListener() {
+        binding.imgLupa.setOnClickListener(view -> searchTrackingNo());
 
+        binding.btnCreateAppt.setOnClickListener(view -> addAppointmentFirebase());
+    }
+
+    private void addAppointmentFirebase() {
+
+        trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
+
+        if (binding.etTrackingNb.getText().toString().equals(""))
+            binding.etTrackingNb.setError("Fill in package code");
+        else if (binding.btnDatePicker.getText().toString().isEmpty())
+            binding.btnDatePicker.setError("Date must be selected");
+        else if (binding.btnHourPicker.getText().toString().isEmpty())
+            binding.btnHourPicker.setError("Hour must be selected");
+        else {
+            createAppointment();
+        }
+
+    }
+
+    private void createAppointment() {
+
+        trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
+        List<Integer> trackingNbList = new ArrayList<>();
+        List<Integer> usedTrackingNbList = new ArrayList<>();
+
+        reference.child("ParcelInfo").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-
-                trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
-
-                if(binding.etTrackingNb.getText().toString().equals(""))
-                    binding.etTrackingNb.setError("Fill in package code");
-                else if(binding.btnDatePicker.getText().toString().isEmpty())
-                    binding.btnDatePicker.setError("Date must be selected");
-                else if(binding.btnHourPicker.getText().toString().isEmpty())
-                    binding.btnHourPicker.setError("Hour must be selected");
-                else
-                {
-                    trackingNb = Integer.parseInt(binding.etTrackingNb.getText().toString());
-                    List<Integer> trackingNbList = new ArrayList<>();
-                    List<Integer> usedTrackingNbList = new ArrayList<>();
-
-                    DatabaseReference ref = firebaseDatabase.getReference().child("ParcelInfo");
-                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            for (DataSnapshot infoSnapshot : snapshot.getChildren()) {
-                                ParcelInfo parcelInfo = infoSnapshot.getValue(ParcelInfo.class);
-                                trackingNbList.add(parcelInfo.getTrackingNb());
-                            }
-                            if(trackingNbList.contains(trackingNb)) {
-                                Appointment appointment = new Appointment(trackingNb, postalOffice, pickupDate, pickupHour);
-
-                                DatabaseReference refAppt = firebaseDatabase.getReference().child("Appointments");
-                                refAppt.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                        for (DataSnapshot infoSnapshot : snapshot.getChildren()) {
-                                            Appointment apptInfo = infoSnapshot.getValue(Appointment.class);
-                                            usedTrackingNbList.add(apptInfo.getTrackingNumber());
-
-                                        }
-                                        if(usedTrackingNbList.contains(trackingNb)) {
-                                            Toast.makeText(getContext(), "There is an appointment created for this code!", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
-                                            appointment.setUid(refAppt.child("Appointments").push().getKey());
-                                            refAppt.child(appointment.getUid()).setValue(appointment);
-                                            Toast.makeText(getContext(), "Appointment created successfully!", Toast.LENGTH_SHORT).show();
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        throw error.toException();
-                                    }
-                                });
-                            }
-                            else {
-                                Toast.makeText(getContext(), "Package code does not exist in the system.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            throw databaseError.toException(); // NEVER ignore errors
-                        }
-                    });
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot infoSnapshot : snapshot.getChildren()) {
+                    ParcelInfo parcelInfo = infoSnapshot.getValue(ParcelInfo.class);
+                    trackingNbList.add(parcelInfo.getTrackingNb());
 
                 }
+                if (trackingNbList.contains(trackingNb)) {
+                    Appointment appointment = new Appointment(trackingNb, postalOffice, pickupDate, pickupHour);
+
+                    reference.child("Appointments").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            for (DataSnapshot infoSnapshot : snapshot.getChildren()) {
+                                Appointment apptInfo = infoSnapshot.getValue(Appointment.class);
+                                usedTrackingNbList.add(apptInfo.getTrackingNumber());
+
+                            }
+                            if (usedTrackingNbList.contains(trackingNb)) {
+                                Toast.makeText(getContext(), "There is an appointment created for this code!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                appointment.setUid(reference.child("Appointments").push().getKey());
+                                reference.child("Appointments").child(appointment.getUid()).setValue(appointment);
+                                Toast.makeText(getContext(), "Appointment created successfully!", Toast.LENGTH_SHORT).show();
+
+                                addAppointmentsToUser(appointment);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            throw error.toException();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getContext(), "Package code does not exist in the system.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException(); // NEVER ignore errors
             }
         });
+    }
 
-        return binding.getRoot();
+    private void addAppointmentsToUser(Appointment appointment) {
+
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        reference.child("Users").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+
+                if(userProfile != null) {
+                    List<Appointment> appointments = userProfile.getUserAppointments();
+
+                    appointments.add(appointment);
+                    firebaseDatabase.getReference("Users")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child("userAppointments")
+                            .setValue(appointments);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Something wrong happened!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void showDateDialog() {
@@ -195,7 +274,7 @@ public class FragmentAppointment extends Fragment {
             calendar.set(Calendar.YEAR, i);
             calendar.set(Calendar.MONTH, i1);
             calendar.set(Calendar.DAY_OF_MONTH, i2);
-            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ){
+            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                 Toast.makeText(getContext(), "Posta Romana does not work in the weekend", Toast.LENGTH_SHORT).show();
             } else {
                 pickupDate = calendar.getTime();
@@ -203,7 +282,7 @@ public class FragmentAppointment extends Fragment {
                 String dataString = data.format(new Date(calendar.getTimeInMillis()));
 
                 binding.btnDatePicker.setText(dataString);
-                binding.btnDatePicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.Green));
+                binding.btnDatePicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
                 dialog.dismiss();
             }
 
@@ -251,15 +330,14 @@ public class FragmentAppointment extends Fragment {
         timePickerView.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                if(i < 8 || i > 19) {
+                if (i < 8 || i > 19) {
                     Toast.makeText(getContext(), "Working hours are between 08:00 - 19:00", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     pickupHour = String.format(Locale.getDefault(), "%02d:%02d", i, i1);
                     calendar.set(Calendar.HOUR, i);
                     calendar.set(Calendar.MINUTE, i1);
                     binding.btnHourPicker.setText(pickupHour);
-                    binding.btnHourPicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.Green));
+                    binding.btnHourPicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
                     btnSetDate.setEnabled(true);
                 }
 

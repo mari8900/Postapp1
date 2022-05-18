@@ -64,6 +64,27 @@ public class FragmentAccount extends Fragment {
             }
         });
 
+        binding.imgEditMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        binding.imgEditPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        binding.imgDeleteAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user.delete();
+            }
+        });
+
         binding.imgLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

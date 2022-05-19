@@ -114,6 +114,7 @@ public class FragmentAppointment extends Fragment {
         binding.cardviewSPINNER.setVisibility(View.VISIBLE);
         binding.btnCreateAppt.setVisibility(View.VISIBLE);
         binding.imgLupa.setVisibility(View.GONE);
+        binding.textViewNotFound.setVisibility(View.GONE);
         binding.tvCreateYourAppt.setText("Book your appointment");
     }
 

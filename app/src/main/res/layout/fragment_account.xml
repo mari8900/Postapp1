@@ -1,226 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvManageAcc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Manage your account"
-        android:fontFamily="@font/fredokamedium"
-        android:textSize="29sp"
-        android:textColor="@color/RomaniaBlue"
-        android:textStyle="bold"
-        android:layout_marginTop="9dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="48dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutFullName"
-        style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Full name"
-        app:boxStrokeColor="@color/RomaniaBlue"
-        app:boxCornerRadiusBottomEnd="@dimen/margine_20"
-        app:boxCornerRadiusTopStart="@dimen/margine_20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvManageAcc">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputEtName"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvAccountDetails"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"
-            android:clickable="false"
-            android:cursorVisible="false"
+            android:layout_marginTop="@dimen/margine_20"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/fredokamedium"
+            android:gravity="center"
+            android:text="Account details"
             android:textColor="@color/RomaniaBlue"
-            android:fontFamily="@font/fredokamedium"/>
+            android:textSize="27sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tvAccountAppointments"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutCNP"
-        style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:hint="CNP"
-        app:boxCornerRadiusBottomEnd="@dimen/margine_20"
-        app:boxCornerRadiusTopStart="@dimen/margine_20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutFullName">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputEtCNP"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvAccountAppointments"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"
-            android:clickable="false"
-            android:cursorVisible="false"
+            android:layout_marginTop="@dimen/margine_20"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/fredokamedium"
+            android:gravity="center"
+            android:text="Appointments"
             android:textColor="@color/RomaniaBlue"
-            android:fontFamily="@font/fredokamedium"/>
+            android:textSize="27sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvAccountDetails"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutResAddress"
-        style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Residence Address"
-        app:boxCornerRadiusBottomEnd="@dimen/margine_20"
-        app:boxCornerRadiusTopStart="@dimen/margine_20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutCNP">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputEtResAddr"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutFullName"
+            style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:textColor="@color/RomaniaBlue"
-            android:fontFamily="@font/fredokamedium"/>
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:hint="Full name"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20"
+            app:boxStrokeColor="@color/RomaniaBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAccountDetails">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:fontFamily="@font/fredokamedium"
+                android:inputType="none"
+                android:textColor="@color/RomaniaBlue" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutEmail"
-        style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Email Address"
-        app:boxCornerRadiusBottomEnd="@dimen/margine_20"
-        app:boxCornerRadiusTopStart="@dimen/margine_20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutResAddress">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputEtEmailAddr"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutCNP"
+            style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"
-            android:clickable="false"
-            android:cursorVisible="false"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:hint="CNP"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutFullName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEtCNP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:fontFamily="@font/fredokamedium"
+                android:inputType="none"
+                android:textColor="@color/RomaniaBlue" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutResAddress"
+            style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:hint="Residence Address"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutCNP">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEtResAddr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:fontFamily="@font/fredokamedium"
+                android:inputType="none"
+                android:textColor="@color/RomaniaBlue" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEmail"
+            style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:hint="Email Address"
+            app:boxCornerRadiusBottomEnd="@dimen/margine_20"
+            app:boxCornerRadiusTopStart="@dimen/margine_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutResAddress">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEtEmailAddr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:fontFamily="@font/fredokamedium"
+                android:inputType="none"
+                android:textColor="@color/RomaniaBlue" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgEditMail"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/bulinaemail"
+            app:layout_constraintEnd_toStartOf="@id/imgEditPass"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutEmail" />
+
+        <TextView
+            android:id="@+id/tvUpdateMail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/fredokamedium"
+            android:gravity="center"
+            android:text="Update mail"
             android:textColor="@color/RomaniaBlue"
-            android:fontFamily="@font/fredokamedium"/>
+            app:layout_constraintEnd_toStartOf="@+id/tvResetPass"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgEditMail" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgEditPass"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/bulinapass"
+            app:layout_constraintEnd_toStartOf="@id/imgDeleteAcc"
+            app:layout_constraintStart_toEndOf="@id/imgEditMail"
+            app:layout_constraintTop_toBottomOf="@id/layoutEmail" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgEditMail"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/bulinaemail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imgEditPass"
-        app:layout_constraintTop_toBottomOf="@id/layoutEmail"/>
+        <TextView
+            android:id="@+id/tvResetPass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fredokamedium"
+            android:gravity="center"
+            android:text="Reset pass"
+            android:textColor="@color/RomaniaBlue"
+            app:layout_constraintEnd_toStartOf="@+id/tvDeleteAcc"
+            app:layout_constraintStart_toEndOf="@id/tvUpdateMail"
+            app:layout_constraintTop_toBottomOf="@id/imgEditMail" />
 
-    <TextView
-        android:id="@+id/tvUpdateMail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Update mail"
-        android:fontFamily="@font/fredokamedium"
-        android:gravity="center"
-        android:textColor="@color/RomaniaBlue"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvResetPass"
-        app:layout_constraintTop_toBottomOf="@id/imgEditMail"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgDeleteAcc"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/bulinadelete"
+            app:layout_constraintEnd_toStartOf="@id/imgLogout"
+            app:layout_constraintStart_toEndOf="@id/imgEditPass"
+            app:layout_constraintTop_toBottomOf="@id/layoutEmail" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgEditPass"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/bulinapass"
-        app:layout_constraintStart_toEndOf="@id/imgEditMail"
-        app:layout_constraintEnd_toStartOf="@id/imgDeleteAcc"
-        app:layout_constraintTop_toBottomOf="@id/layoutEmail"/>
+        <TextView
+            android:id="@+id/tvDeleteAcc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fredokamedium"
+            android:gravity="center"
+            android:text="Delete account"
+            android:textColor="@color/RomaniaBlue"
+            app:layout_constraintEnd_toStartOf="@+id/tvLogout"
+            app:layout_constraintStart_toEndOf="@id/tvResetPass"
+            app:layout_constraintTop_toBottomOf="@id/imgEditMail" />
 
-    <TextView
-        android:id="@+id/tvResetPass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Reset pass"
-        android:fontFamily="@font/fredokamedium"
-        android:gravity="center"
-        android:textColor="@color/RomaniaBlue"
-        app:layout_constraintStart_toEndOf="@id/tvUpdateMail"
-        app:layout_constraintEnd_toStartOf="@+id/tvDeleteAcc"
-        app:layout_constraintTop_toBottomOf="@id/imgEditMail"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgLogout"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/bulinalogout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgDeleteAcc"
+            app:layout_constraintTop_toBottomOf="@id/layoutEmail" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgDeleteAcc"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/bulinadelete"
-        app:layout_constraintStart_toEndOf="@id/imgEditPass"
-        app:layout_constraintEnd_toStartOf="@id/imgLogout"
-        app:layout_constraintTop_toBottomOf="@id/layoutEmail"/>
 
-    <TextView
-        android:id="@+id/tvDeleteAcc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Delete account"
-        android:fontFamily="@font/fredokamedium"
-        android:gravity="center"
-        android:textColor="@color/RomaniaBlue"
-        app:layout_constraintStart_toEndOf="@id/tvResetPass"
-        app:layout_constraintEnd_toStartOf="@+id/tvLogout"
-        app:layout_constraintTop_toBottomOf="@id/imgEditMail"/>
+        <TextView
+            android:id="@+id/tvLogout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/fredokamedium"
+            android:gravity="center"
+            android:text="Log out"
+            android:textColor="@color/RomaniaBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvDeleteAcc"
+            app:layout_constraintTop_toBottomOf="@id/imgEditMail" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgLogout"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/bulinalogout"
-        app:layout_constraintStart_toEndOf="@id/imgDeleteAcc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutEmail"/>
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/accountView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tvManageAcc,layoutFullName,layoutCNP,layoutResAddress,layoutEmail,imgEditMail,imgEditPass,imgDeleteAcc,imgLogout, tvUpdateMail, tvResetPass, tvDeleteAcc, tvLogout" />
 
-    <TextView
-        android:id="@+id/tvLogout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Log out"
-        android:fontFamily="@font/fredokamedium"
-        android:gravity="center"
-        android:textColor="@color/RomaniaBlue"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintStart_toEndOf="@id/tvDeleteAcc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgEditMail"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAppointments"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAccountDetails"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvNoAppt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="You do not have any appointments"
+            android:fontFamily="@font/fredokamedium"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/RomaniaRed"
+            app:layout_constraintTop_toBottomOf="@id/tvAccountDetails"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+

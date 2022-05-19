@@ -2,4 +2,8 @@
     <string name="app_name">Postapp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="strTrackNb">Package number <![CDATA[<b><font color=#CE1126>%1$d</font></b>]]></string>
+    <string name="strDate">Date <![CDATA[<b><font color=#CE1126>%1$s</font></b>]]></string>
+    <string name="strHour">Hour <![CDATA[<b><font color=#CE1126>%1$s</font></b>]]></string>
+    <string name="strPO">Postal Office <![CDATA[<b><font color=#CE1126>%1$s</font></b>]]></string>
 </resources>

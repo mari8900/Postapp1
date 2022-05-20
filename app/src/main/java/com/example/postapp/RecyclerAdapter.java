@@ -1,21 +1,16 @@
 package com.example.postapp;
 
 import android.content.Context;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
@@ -23,7 +18,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         List<Appointment> appointmentList;
         Context context;
 
-        // RecyclerView recyclerView;
         public RecyclerAdapter(List<Appointment> appointmentList, Context context) {
             this.appointmentList = appointmentList;
             this.context = context;
@@ -41,6 +35,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public void onBindViewHolder(ViewHolder holder, int position) {
             SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
             String dataString = data.format(appointmentList.get(position).getPickupDate());
+
+            String stringApptNumber = context.getResources().getString(R.string.strAppt);
+            stringApptNumber = String.format(stringApptNumber, position + 1);
+
             String stringPackageNb = context.getResources().getString(R.string.strTrackNb);
             stringPackageNb = String.format(stringPackageNb, appointmentList.get(position).getTrackingNumber());
 
@@ -53,6 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             String stringPO = context.getResources().getString(R.string.strPO);
             stringPO = String.format(stringPO, appointmentList.get(position).getCurrentPO());
 
+            holder.tvAppt.setText(HtmlCompat.fromHtml(stringApptNumber, HtmlCompat.FROM_HTML_MODE_LEGACY));
             holder.tvTrack.setText(HtmlCompat.fromHtml(stringPackageNb, HtmlCompat.FROM_HTML_MODE_LEGACY));
             holder.tvDate.setText(HtmlCompat.fromHtml(stringDate, HtmlCompat.FROM_HTML_MODE_LEGACY));
             holder.tvHour.setText(HtmlCompat.fromHtml(stringHour, HtmlCompat.FROM_HTML_MODE_LEGACY));
@@ -67,10 +66,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
-            public TextView tvTrack, tvDate, tvHour, tvPO;
+            public TextView tvAppt, tvTrack, tvDate, tvHour, tvPO;
 
             public ViewHolder(View itemView) {
                 super(itemView);
+                this.tvAppt = (TextView) itemView.findViewById(R.id.tvAppt);
                 this.tvTrack = (TextView) itemView.findViewById(R.id.tvTrack);
                 this.tvDate = (TextView) itemView.findViewById(R.id.tvDate);
                 this.tvHour = (TextView) itemView.findViewById(R.id.tvHour);

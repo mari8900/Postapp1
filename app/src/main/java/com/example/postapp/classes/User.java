@@ -1,4 +1,6 @@
-package com.example.postapp;
+package com.example.postapp.classes;
+
+import com.example.postapp.classes.Appointment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +25,6 @@ public class User {
         this.name = name;
     }
 
-//    public String getCNP() {
-//        return CNP;
-//    }
-
-//    public void setCNP(String CNP) {
-//        this.CNP = CNP;
-//    }
-
     public String getAddress() {
         return address;
     }
@@ -46,23 +40,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-//    public List<Appointment> getUserAppointments() {
-//        List<Appointment> copy = new ArrayList<>();
-//        for(Appointment a: userAppointments) {
-//            copy.add(a);
-//        }
-//        return copy;
-//    }
-//
-//    public void setUserAppointments(List<Appointment> userAppointments) {
-//        if(userAppointments != null) {
-//            for(Appointment a: userAppointments) {
-//                this.userAppointments.add(a);
-//            }
-//        }
-//    }
-
 
     public List<Appointment> getUserAppointments() {
         return userAppointments;

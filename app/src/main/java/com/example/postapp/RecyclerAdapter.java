@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.postapp.classes.Appointment;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 

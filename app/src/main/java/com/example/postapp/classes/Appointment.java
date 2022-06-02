@@ -1,4 +1,4 @@
-package com.example.postapp;
+package com.example.postapp.classes;
 
 import java.util.Date;
 

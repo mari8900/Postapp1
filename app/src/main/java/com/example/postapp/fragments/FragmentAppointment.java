@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,14 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.postapp.Appointment;
-import com.example.postapp.ParcelInfo;
+import com.example.postapp.classes.Appointment;
+import com.example.postapp.classes.ParcelInfo;
 import com.example.postapp.R;
 import com.example.postapp.SpinnerNew;
-import com.example.postapp.User;
+import com.example.postapp.classes.User;
 import com.example.postapp.databinding.FragmentAppointmentBinding;
 import com.example.postapp.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,10 +37,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class FragmentAppointment extends Fragment {
 

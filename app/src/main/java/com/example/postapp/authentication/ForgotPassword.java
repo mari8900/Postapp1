@@ -12,29 +12,26 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.postapp.R;
+import com.example.postapp.databinding.ActivityForgotPasswordBinding;
+import com.example.postapp.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPassword extends AppCompatActivity {
 
-    private EditText etEmail;
-    private Button btnReset;
-    private ProgressBar progressBar;
+    private ActivityForgotPasswordBinding binding;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_password);
-
-        etEmail = findViewById(R.id.etEnterEmail);
-        progressBar = findViewById(R.id.progressBar3);
-        btnReset = findViewById(R.id.btnReset);
+        binding = ActivityForgotPasswordBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
 
-        btnReset.setOnClickListener(new View.OnClickListener() {
+        binding.btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resetPassword();
@@ -43,21 +40,21 @@ public class ForgotPassword extends AppCompatActivity {
     }
 
     private void resetPassword() {
-        String email = etEmail.getText().toString().trim();
+        String email = binding.etEnterEmail.getText().toString().trim();
 
         if(email.isEmpty()) {
-            etEmail.setError("Email is required");
-            etEmail.requestFocus();
+            binding.etEnterEmail.setError("Email is required");
+            binding.etEnterEmail.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Please provide a valid email");
-            etEmail.requestFocus();
+            binding.etEnterEmail.setError("Please provide a valid email");
+            binding.etEnterEmail.requestFocus();
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar3.setVisibility(View.VISIBLE);
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -67,7 +64,7 @@ public class ForgotPassword extends AppCompatActivity {
                 } else {
                     Toast.makeText(ForgotPassword.this, "Oops! Something went wrong, please try again!", Toast.LENGTH_LONG).show();
                 }
-                progressBar.setVisibility(View.GONE);
+                binding.progressBar3.setVisibility(View.GONE);
             }
         });
     }

@@ -202,7 +202,11 @@ public class FragmentAppointment extends Fragment {
                             } else {
                                 appointment.setUid(reference.child("Appointments").push().getKey());
                                 reference.child("Appointments").child(appointment.getUid()).setValue(appointment);
-                                Toast.makeText(getContext(), "Appointment created successfully!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "Appointment created successfully!", Toast.LENGTH_SHORT).show();
+
+                                binding.tvApptCreated.setVisibility(View.VISIBLE);
+                                binding.groupCreateAppointment.setVisibility(View.GONE);
+                                binding.lottieAppointmentCreated.setVisibility(View.VISIBLE);
 
                                 addAppointmentsToUser(appointment);
                             }

@@ -3,6 +3,7 @@ package com.example.postapp.authentication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.postapp.BottomNav;
 import com.example.postapp.R;
 import com.example.postapp.classes.User;
 import com.example.postapp.databinding.ActivityRegisterBinding;
@@ -73,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        if(cnp.length() < 13) {
+        if(cnp.length() != 13) {
             binding.etCNP.setError("CNP length must be 13 characters");
             binding.etCNP.requestFocus();
             return;
@@ -129,10 +131,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
                                         binding.progressBar2.setVisibility(View.GONE);
+                                        binding.groupRegister.setVisibility(View.GONE);
+                                        binding.groupLottieAnimRegister.setVisibility(View.VISIBLE);
+                                        binding.lottieUserRegistered.playAnimation();
+                                        binding.lottieUserRegistered.addAnimatorListener(new Animator.AnimatorListener() {
+                                            @Override
+                                            public void onAnimationStart(Animator animator) {
 
-                                        // redirect to login layout
+                                            }
+
+                                            @Override
+                                            public void onAnimationEnd(Animator animator) {
+                                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                            }
+
+                                            @Override
+                                            public void onAnimationCancel(Animator animator) {
+
+                                            }
+
+                                            @Override
+                                            public void onAnimationRepeat(Animator animator) {
+
+                                            }
+                                        });
+
+                                        //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
                                         binding.progressBar2.setVisibility(View.GONE);

@@ -9,37 +9,89 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvAccountDetails"
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:background="@drawable/background_radiogroup"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margine_20"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/fredokamedium"
-            android:gravity="center"
-            android:text="Account details"
-            android:textColor="@color/RomaniaBlue"
-            android:textSize="27sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/tvAccountAppointments"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvAccountAppointments"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margine_20"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/fredokamedium"
-            android:gravity="center"
-            android:text="Appointments"
-            android:textColor="@color/RomaniaBlue"
-            android:textSize="27sp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:checkedButton="@id/radioBtnAccount"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvAccountDetails"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioBtnAccount"
+                android:background="@drawable/background_radiobutton_toggle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Account details"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:gravity="center"
+                android:fontFamily="@font/fredokamedium"
+                android:textColor="@color/white"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:button="@null"/>
+
+            <RadioButton
+                android:id="@+id/radioBtnAppointments"
+                android:layout_width="0dp"
+                android:background="@drawable/background_radiobutton_toggle"
+                android:layout_height="wrap_content"
+                android:text="Appointments"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:gravity="center"
+                android:fontFamily="@font/fredokamedium"
+                android:textColor="@color/white"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:button="@null"/>
+
+        </RadioGroup>
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvAccountDetails"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/margine_20"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:fontFamily="@font/fredokamedium"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Account details"-->
+<!--            android:textColor="@color/RomaniaBlue"-->
+<!--            android:textSize="27sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/tvAccountAppointments"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvAccountAppointments"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/margine_20"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:fontFamily="@font/fredokamedium"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Appointments"-->
+<!--            android:textColor="@color/RomaniaBlue"-->
+<!--            android:textSize="27sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/tvAccountDetails"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -56,7 +108,7 @@
             app:boxStrokeColor="@color/RomaniaBlue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAccountDetails">
+            app:layout_constraintTop_toBottomOf="@id/radiogroup">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEtName"
@@ -253,7 +305,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:constraint_referenced_ids="tvManageAcc,layoutFullName,layoutCNP,layoutResAddress,layoutEmail,imgEditMail,imgEditPass,imgDeleteAcc,imgLogout, tvUpdateMail, tvResetPass, tvDeleteAcc, tvLogout" />
+            app:constraint_referenced_ids="layoutFullName,layoutCNP,layoutResAddress,layoutEmail,imgEditMail,imgEditPass,imgDeleteAcc,imgLogout, tvUpdateMail, tvResetPass, tvDeleteAcc, tvLogout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAppointments"
@@ -262,7 +314,7 @@
             android:visibility="gone"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAccountDetails"
+            app:layout_constraintTop_toBottomOf="@id/radiogroup"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
@@ -278,7 +330,23 @@
             android:visibility="gone"
             android:layout_marginTop="30dp"
             android:textColor="@color/RomaniaRed"
-            app:layout_constraintTop_toBottomOf="@id/tvAccountDetails"/>
+            app:layout_constraintTop_toBottomOf="@id/radiogroup"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_not_found"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margine_20"
+            android:layout_marginEnd="@dimen/margine_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNoAppt"
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="search_not_found_lottie.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

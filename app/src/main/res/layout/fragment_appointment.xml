@@ -10,30 +10,30 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintVertical_chainStyle="spread"
         android:fontFamily="@font/fredokamedium"
         android:text="Search tracking number"
         android:textColor="@color/RomaniaBlue"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toTopOf="@id/cardviewParent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/cardviewParent"/>
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardviewParent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/RomaniaBlue"
         app:cardCornerRadius="25dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCreateYourAppt">
 
         <LinearLayout
@@ -57,13 +57,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:padding="10dp"
                     android:drawableStart="@drawable/ic_code"
                     android:fontFamily="@font/fredokamedium"
                     android:gravity="center"
                     android:hint="Tracking number"
                     android:inputType="number"
-                    android:textSize="25sp"/>
+                    android:padding="10dp"
+                    android:textSize="25sp" />
 
             </androidx.cardview.widget.CardView>
 
@@ -74,8 +74,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margine_20"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="15dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardCornerRadius="15dp">
 
                 <TextView
                     android:id="@+id/btnDatePicker"
@@ -98,8 +98,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margine_20"
                 android:background="@color/white"
-                app:cardCornerRadius="15dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardCornerRadius="15dp">
 
                 <TextView
                     android:id="@+id/btnHourPicker"
@@ -123,8 +123,8 @@
                 android:layout_marginTop="@dimen/margine_20"
                 android:layout_marginBottom="@dimen/margine_20"
                 android:background="@color/white"
-                app:cardCornerRadius="15dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardCornerRadius="15dp">
 
                 <Spinner
                     android:id="@+id/spinnerCreate"
@@ -137,24 +137,24 @@
                 android:id="@+id/imgLupa"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_search"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margine_20"
                 android:layout_marginBottom="@dimen/margine_20"
-                app:tint="@color/white"/>
+                android:src="@drawable/ic_search"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/textViewNotFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margine_20"
+                android:fontFamily="@font/fredokamedium"
+                android:padding="6dp"
                 android:text="Tracking number doesn't exist"
                 android:textColor="@color/white"
                 android:textSize="17sp"
-                android:layout_gravity="center"
-                android:fontFamily="@font/fredokamedium"
-                android:layout_marginBottom="@dimen/margine_20"
-                android:padding="6dp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -164,20 +164,68 @@
         android:id="@+id/btnCreateAppt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
+        android:background="@drawable/custom_button"
         android:fontFamily="@font/fredokamedium"
+        android:paddingStart="40dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="40dp"
+        android:paddingBottom="15dp"
+        android:text="Create"
+        android:textColor="@color/white"
         android:textSize="23sp"
         android:textStyle="bold"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:background="@drawable/custom_button"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardviewParent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardviewParent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupCreateAppointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tvCreateYourAppt, cardviewParent,btnCreateAppt" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_appointment_created"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/margine_20"
+        android:layout_marginEnd="@dimen/margine_20"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvApptCreated"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="appointment_created.json"
+        app:lottie_loop="false"
+        app:lottie_speed="0.75" />
+
+    <TextView
+        android:id="@+id/tvApptCreated"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/fredokamedium"
+        android:gravity="center"
+        android:text="Appointment created succesfully!"
+        android:textColor="@color/RomaniaBlue"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineFragmentAppt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineFragmentAppt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

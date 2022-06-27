@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.postapp.fragments.FragmentHome"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_fragmentAppointment"
+            app:destination="@id/fragmentAppointment" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentAppointment"
         android:name="com.example.postapp.fragments.FragmentAppointment"

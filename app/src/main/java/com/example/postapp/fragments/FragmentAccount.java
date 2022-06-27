@@ -71,16 +71,17 @@ public class FragmentAccount extends Fragment {
             startActivity(new Intent(getContext(), LoginActivity.class));
         });
 
-        binding.tvAccountDetails.setOnClickListener(new View.OnClickListener() {
+        binding.radioBtnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.rvAppointments.setVisibility(View.GONE);
                 binding.accountView.setVisibility(View.VISIBLE);
                 binding.tvNoAppt.setVisibility(View.GONE);
+                binding.lottieNotFound.setVisibility(View.GONE);
             }
         });
 
-        binding.tvAccountAppointments.setOnClickListener(new View.OnClickListener() {
+        binding.radioBtnAppointments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.rvAppointments.setVisibility(View.VISIBLE);
@@ -123,6 +124,8 @@ public class FragmentAccount extends Fragment {
         if(appointmentList.isEmpty()) {
             binding.tvNoAppt.setVisibility(View.VISIBLE);
             binding.rvAppointments.setVisibility(View.GONE);
+            binding.lottieNotFound.setVisibility(View.VISIBLE);
+
         }
         else {
             RecyclerAdapter adapter = new RecyclerAdapter(appointmentList, getContext());

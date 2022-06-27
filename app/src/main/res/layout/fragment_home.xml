@@ -91,6 +91,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardviewStep2"
             android:layout_width="380dp"
             android:layout_height="125dp"
             app:cardCornerRadius="15dp"

@@ -1,9 +1,17 @@
 package com.example.postapp.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
 
     // max 14 days to keep parcel at the postal office
     public static int appointmentDays = 14;
+
+    public static List<Integer> hours = Arrays.asList(8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
+    public static List<String> minutes = Arrays.asList("00", "10", "20", "30", "40", "50");
+
 
     public static String[] opList = new String[] {"Oficiul Postal 7",
             "Oficiul Postal 23",

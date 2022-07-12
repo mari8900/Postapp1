@@ -9,9 +9,9 @@
         android:topRightRadius="100dp"/>
 
     <solid
-        android:color="@color/black"/>
+        android:color="@color/DarkRomaniaBlue"/>
 
     <stroke
         android:width="3dp"
-        android:color="@color/black" />
+        android:color="@color/DarkRomaniaBlue" />
 </shape>

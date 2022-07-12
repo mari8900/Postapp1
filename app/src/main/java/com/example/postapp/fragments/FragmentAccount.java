@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -37,6 +38,8 @@ public class FragmentAccount extends Fragment {
     private String userID;
     private FragmentAccountBinding binding;
     private List<Appointment> appointmentList;
+    private AlertDialog.Builder resetEmail;
+    private LayoutInflater layoutInflater;
 
     @Nullable
     @Override
@@ -47,6 +50,8 @@ public class FragmentAccount extends Fragment {
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
+        resetEmail = new AlertDialog.Builder(getContext());
+        layoutInflater = inflater;
 
         displayInfoFromFirebase();
         listeners();

@@ -1,14 +1,18 @@
 package com.example.postapp.fragments;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +20,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.postapp.TimepickerAdapterHour;
+import com.example.postapp.TimepickerAdapterMinutes;
 import com.example.postapp.classes.Appointment;
 import com.example.postapp.classes.ParcelInfo;
 import com.example.postapp.R;
@@ -33,12 +38,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 public class FragmentAppointment extends Fragment {
 
@@ -50,6 +58,11 @@ public class FragmentAppointment extends Fragment {
     private String pickupHour;
     private String postalOffice;
     private Calendar calendar;
+    TimepickerAdapterHour timepickerAdapterHour;
+    TimepickerAdapterMinutes timepickerAdapterMinutes;
+    List<Appointment> appointmentList = new ArrayList<>();
+    String selectedHour = "";
+    String selectedMin = "";
 
     @Nullable
     @Override
@@ -83,15 +96,15 @@ public class FragmentAppointment extends Fragment {
 
                 if (trackingNbList.contains(trackingNb)) {
                     setViewCorrectNo();
-
                     String op = poList.get(trackingNbList.indexOf(trackingNb));
                     for (int i = 0; i < Constants.opList.length; i++) {
                         if (Constants.opList[i].equals(op)) {
                             binding.spinnerCreate.setSelection(i);
+                            postalOffice = Constants.opList[i];
                             break;
                         }
                     }
-
+                    getAppointmentsFromDb();
                 } else {
                     binding.textViewNotFound.setVisibility(View.VISIBLE);
                 }
@@ -134,7 +147,13 @@ public class FragmentAppointment extends Fragment {
 
         binding.btnDatePicker.setOnClickListener(view -> showDateDialog());
 
-        binding.btnHourPicker.setOnClickListener(view -> showTimePickerDialog());
+        binding.btnHourPicker.setOnClickListener(view -> {
+            if(pickupDate == null) {
+                Toast.makeText(getContext(), "Please select the date first!", Toast.LENGTH_LONG).show();
+            } else {
+                showTimePickerDialog();
+            }
+        });
 
         SpinnerNew spinnerAdapter = new SpinnerNew(getContext());
         binding.spinnerCreate.setAdapter(spinnerAdapter);
@@ -301,50 +320,109 @@ public class FragmentAppointment extends Fragment {
 
     private void showTimePickerDialog() {
         final Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.timepicker_view);
-        Button btnSetDate = dialog.findViewById(R.id.btnSetTime);
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose);
+        dialog.setContentView(R.layout.dialog_timepicker);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        ImageButton btnClose;
+        Button btnSetTime;
+        btnClose = dialog.findViewById(R.id.btnClose);
+        btnSetTime = dialog.findViewById(R.id.btnSetTime);
 
-        TimePicker timePickerView =
-                dialog.findViewById(R.id.timepicker_view);
+        btnClose.setOnClickListener(view -> dialog.dismiss());
 
-        timePickerView.setIs24HourView(true);
-
-        btnSetDate.setEnabled(false);
-        btnSetDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+        btnSetTime.setOnClickListener(view -> {
+            if(!selectedHour.equals("") && !selectedMin.equals("")) {
+                pickupHour = selectedHour + ":" + selectedMin;
                 dialog.dismiss();
-
+                binding.btnHourPicker.setText(pickupHour);
+            } else {
+                Toast.makeText(getContext(), "Please select a desired hour!", Toast.LENGTH_LONG).show();
             }
+
         });
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.btnHourPicker.setText("");
-                dialog.dismiss();
-            }
-        });
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String selectedDate = sdf.format(pickupDate);
+        Map<String, List<String>> appointmentsHours = new HashMap<>();
 
-        timePickerView.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                if (i < 8 || i > 19) {
-                    Toast.makeText(getContext(), "Working hours are between 08:00 - 19:00", Toast.LENGTH_SHORT).show();
-                } else {
-                    pickupHour = String.format(Locale.getDefault(), "%02d:%02d", i, i1);
-                    calendar.set(Calendar.HOUR, i);
-                    calendar.set(Calendar.MINUTE, i1);
-                    binding.btnHourPicker.setText(pickupHour);
-                    binding.btnHourPicker.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.RomaniaBlue));
-                    btnSetDate.setEnabled(true);
+
+        for(Appointment a: appointmentList) {
+            if(a.getCurrentPO().equals(postalOffice)) {
+                String appointmentsDates = sdf.format(a.getPickupDate());
+                if(appointmentsDates.equals(selectedDate)) {
+                    String[] divided = a.getPickupHour().split(":");
+                    if(appointmentsHours.get(divided[0]) == null) {
+                        appointmentsHours.put(divided[0], new ArrayList<>());
+                        List<String> usedHours = appointmentsHours.get(divided[0]);
+                        usedHours.add(divided[1]);
+                        appointmentsHours.put(divided[0], usedHours);
+                    } else {
+                        List<String> usedHours = appointmentsHours.get(divided[0]);
+                        usedHours.add(divided[1]);
+                        appointmentsHours.put(divided[0], usedHours);
+                    }
+
                 }
+            }
+        }
 
+        RecyclerView rvHour = dialog.findViewById(R.id.rvTimepickerHour);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        timepickerAdapterHour = new TimepickerAdapterHour((hour, position) -> {
+            timepickerAdapterHour.updatePos(position);
+            selectedHour = hour;
+
+            List<String> checkAvailableMinutes = appointmentsHours.get(hour);
+            if(checkAvailableMinutes != null) {
+                List<Boolean> isAvailable = new ArrayList<>(Collections.nCopies(6, true));
+
+                for(String s : checkAvailableMinutes) {
+                    int p = Constants.minutes.indexOf(s);
+                    isAvailable.set(p, false);
+                }
+                timepickerAdapterMinutes.updateAvailability(isAvailable);
             }
         });
+        rvHour.setAdapter(timepickerAdapterHour);
+        rvHour.setLayoutManager(linearLayoutManager);
+
+
+        RecyclerView rvMinutes = dialog.findViewById(R.id.rvTimepickerMinute);
+        LinearLayoutManager linearLayoutManagerMin = new LinearLayoutManager(getContext());
+        timepickerAdapterMinutes = new TimepickerAdapterMinutes((minutes, pos) -> {
+            if(!selectedHour.equals("")) {
+                timepickerAdapterMinutes.updatePos(pos);
+                selectedMin = minutes;
+            } else {
+                Toast.makeText(getContext(), "Please select the hour first!", Toast.LENGTH_LONG).show();
+            }
+
+        });
+        rvMinutes.setAdapter(timepickerAdapterMinutes);
+        rvMinutes.setLayoutManager(linearLayoutManagerMin);
+
+
 
         dialog.show();
+    }
+
+    private void getAppointmentsFromDb() {
+
+
+        reference.child("Appointments").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot infoSnapshot : snapshot.getChildren()) {
+                    appointmentList.add(infoSnapshot.getValue(Appointment.class));
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
     }
 }

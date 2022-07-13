@@ -1,12 +1,26 @@
 package com.example.postapp.fragments;
 
+import android.animation.Animator;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,17 +33,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.postapp.TimepickerAdapterHour;
 import com.example.postapp.TimepickerAdapterMinutes;
+import com.example.postapp.authentication.LoginActivity;
 import com.example.postapp.classes.Appointment;
 import com.example.postapp.classes.ParcelInfo;
 import com.example.postapp.R;
 import com.example.postapp.SpinnerNew;
 import com.example.postapp.classes.User;
 import com.example.postapp.databinding.FragmentAppointmentBinding;
+import com.example.postapp.utils.AlarmReceiver;
 import com.example.postapp.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +64,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class FragmentAppointment extends Fragment {
 
@@ -58,11 +77,13 @@ public class FragmentAppointment extends Fragment {
     private String pickupHour;
     private String postalOffice;
     private Calendar calendar;
-    TimepickerAdapterHour timepickerAdapterHour;
-    TimepickerAdapterMinutes timepickerAdapterMinutes;
-    List<Appointment> appointmentList = new ArrayList<>();
-    String selectedHour = "";
-    String selectedMin = "";
+    private TimepickerAdapterHour timepickerAdapterHour;
+    private TimepickerAdapterMinutes timepickerAdapterMinutes;
+    private List<Appointment> appointmentList = new ArrayList<>();
+    private String selectedHour = "";
+    private String selectedMin = "";
+    private boolean checkedNotif;
+
 
     @Nullable
     @Override
@@ -104,6 +125,7 @@ public class FragmentAppointment extends Fragment {
                             break;
                         }
                     }
+
                     getAppointmentsFromDb();
                 } else {
                     binding.textViewNotFound.setVisibility(View.VISIBLE);
@@ -124,6 +146,7 @@ public class FragmentAppointment extends Fragment {
         binding.btnCreateAppt.setVisibility(View.VISIBLE);
         binding.imgLupa.setVisibility(View.GONE);
         binding.textViewNotFound.setVisibility(View.GONE);
+        binding.notifLayout.setVisibility(View.VISIBLE);
         binding.tvCreateYourAppt.setText("Book your appointment");
     }
 
@@ -148,7 +171,7 @@ public class FragmentAppointment extends Fragment {
         binding.btnDatePicker.setOnClickListener(view -> showDateDialog());
 
         binding.btnHourPicker.setOnClickListener(view -> {
-            if(pickupDate == null) {
+            if (pickupDate == null) {
                 Toast.makeText(getContext(), "Please select the date first!", Toast.LENGTH_LONG).show();
             } else {
                 showTimePickerDialog();
@@ -161,6 +184,8 @@ public class FragmentAppointment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 postalOffice = Constants.opList[i];
+                binding.btnHourPicker.setText("");
+                binding.btnDatePicker.setText("");
             }
 
             @Override
@@ -172,6 +197,13 @@ public class FragmentAppointment extends Fragment {
         binding.imgLupa.setOnClickListener(view -> searchTrackingNo());
 
         binding.btnCreateAppt.setOnClickListener(view -> addAppointmentFirebase());
+
+        binding.notifBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                checkedNotif = b;
+            }
+        });
     }
 
     private void addAppointmentFirebase() {
@@ -226,8 +258,35 @@ public class FragmentAppointment extends Fragment {
                                 binding.tvApptCreated.setVisibility(View.VISIBLE);
                                 binding.groupCreateAppointment.setVisibility(View.GONE);
                                 binding.lottieAppointmentCreated.setVisibility(View.VISIBLE);
+                                binding.btnCreateAppt.setVisibility(View.GONE);
+                                binding.notifLayout.setVisibility(View.GONE);
 
                                 addAppointmentsToUser(appointment);
+                                if(checkedNotif) {
+                                    notifInit();
+                                }
+
+                                binding.lottieAppointmentCreated.addAnimatorListener(new Animator.AnimatorListener() {
+                                    @Override
+                                    public void onAnimationStart(Animator animator) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animator animator) {
+                                        Navigation.findNavController(binding.lottieAppointmentCreated).navigate(R.id.action_fragmentAppointment_to_fragmentAccount);
+                                    }
+
+                                    @Override
+                                    public void onAnimationCancel(Animator animator) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animator animator) {
+
+                                    }
+                                });
                             }
 
                         }
@@ -258,7 +317,7 @@ public class FragmentAppointment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
 
-                if(userProfile != null) {
+                if (userProfile != null) {
                     List<Appointment> appointments = userProfile.getUserAppointments();
 
                     appointments.add(appointment);
@@ -330,7 +389,7 @@ public class FragmentAppointment extends Fragment {
         btnClose.setOnClickListener(view -> dialog.dismiss());
 
         btnSetTime.setOnClickListener(view -> {
-            if(!selectedHour.equals("") && !selectedMin.equals("")) {
+            if (!selectedHour.equals("") && !selectedMin.equals("")) {
                 pickupHour = selectedHour + ":" + selectedMin;
                 dialog.dismiss();
                 binding.btnHourPicker.setText(pickupHour);
@@ -344,13 +403,12 @@ public class FragmentAppointment extends Fragment {
         String selectedDate = sdf.format(pickupDate);
         Map<String, List<String>> appointmentsHours = new HashMap<>();
 
-
-        for(Appointment a: appointmentList) {
-            if(a.getCurrentPO().equals(postalOffice)) {
+        for (Appointment a : appointmentList) {
+            if (a.getCurrentPO().equals(postalOffice)) {
                 String appointmentsDates = sdf.format(a.getPickupDate());
-                if(appointmentsDates.equals(selectedDate)) {
+                if (appointmentsDates.equals(selectedDate)) {
                     String[] divided = a.getPickupHour().split(":");
-                    if(appointmentsHours.get(divided[0]) == null) {
+                    if (appointmentsHours.get(divided[0]) == null) {
                         appointmentsHours.put(divided[0], new ArrayList<>());
                         List<String> usedHours = appointmentsHours.get(divided[0]);
                         usedHours.add(divided[1]);
@@ -372,10 +430,10 @@ public class FragmentAppointment extends Fragment {
             selectedHour = hour;
 
             List<String> checkAvailableMinutes = appointmentsHours.get(hour);
-            if(checkAvailableMinutes != null) {
+            if (checkAvailableMinutes != null) {
                 List<Boolean> isAvailable = new ArrayList<>(Collections.nCopies(6, true));
 
-                for(String s : checkAvailableMinutes) {
+                for (String s : checkAvailableMinutes) {
                     int p = Constants.minutes.indexOf(s);
                     isAvailable.set(p, false);
                 }
@@ -389,7 +447,7 @@ public class FragmentAppointment extends Fragment {
         RecyclerView rvMinutes = dialog.findViewById(R.id.rvTimepickerMinute);
         LinearLayoutManager linearLayoutManagerMin = new LinearLayoutManager(getContext());
         timepickerAdapterMinutes = new TimepickerAdapterMinutes((minutes, pos) -> {
-            if(!selectedHour.equals("")) {
+            if (!selectedHour.equals("")) {
                 timepickerAdapterMinutes.updatePos(pos);
                 selectedMin = minutes;
             } else {
@@ -399,7 +457,6 @@ public class FragmentAppointment extends Fragment {
         });
         rvMinutes.setAdapter(timepickerAdapterMinutes);
         rvMinutes.setLayoutManager(linearLayoutManagerMin);
-
 
 
         dialog.show();
@@ -424,5 +481,58 @@ public class FragmentAppointment extends Fragment {
                 throw error.toException();
             }
         });
+    }
+
+    public void notifInit() {
+        AlarmManager alarmMgr;
+        PendingIntent alarmIntentList;
+
+        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+        intent.setAction("NOTIFICATION");
+        alarmMgr = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        alarmIntentList = PendingIntent.getBroadcast(getContext(), 3, intent, 0);
+
+        setDailyAlarm(alarmMgr, alarmIntentList);
+
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.app_name);
+            String description = getString(R.string.app_name);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("postapp", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+            Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
+        }
+    }
+
+    private void setDailyAlarm(AlarmManager alarmMgr, PendingIntent alarmIntentList) {
+        createNotificationChannel();
+        newAlarmService(alarmMgr, alarmIntentList);
+    }
+
+    private void newAlarmService(AlarmManager alarmManager, PendingIntent pendingIntent) {
+        alarmManager.cancel(pendingIntent);
+        ComponentName receiver = new ComponentName(getContext(), AlarmReceiver.class);
+        PackageManager pm = requireContext().getPackageManager();
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+        Calendar calendarAlarm = (Calendar) calendar.clone();
+        calendarAlarm.set(Calendar.DAY_OF_YEAR, calendarAlarm.get(Calendar.DAY_OF_YEAR) - 1);
+
+
+        calendarAlarm.set(Calendar.HOUR_OF_DAY, 11);
+        calendarAlarm.set(Calendar.MINUTE, 46);
+
+        String notifMessage = "Don't forget about your pickup appointment tomorrow at PO " + postalOffice + " at " + pickupHour;
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.NOTIF_MESSAGE, notifMessage);
+        editor.apply();
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendarAlarm.getTimeInMillis(), pendingIntent);
     }
 }

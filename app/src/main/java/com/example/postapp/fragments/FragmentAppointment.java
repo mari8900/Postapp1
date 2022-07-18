@@ -669,7 +669,6 @@ public class FragmentAppointment extends Fragment {
 
     private void getAppointmentsFromDb() {
 
-
         reference.child("Appointments").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -729,8 +728,8 @@ public class FragmentAppointment extends Fragment {
         calendarAlarm.set(Calendar.DAY_OF_YEAR, calendarAlarm.get(Calendar.DAY_OF_YEAR) - 1);
 
 
-        calendarAlarm.set(Calendar.HOUR_OF_DAY, 22);
-        calendarAlarm.set(Calendar.MINUTE, 55);
+        calendarAlarm.set(Calendar.HOUR_OF_DAY, 13);
+        calendarAlarm.set(Calendar.MINUTE, 15);
 
         String notifMessage = "Don't forget about your pickup appointment tomorrow at PO " + postalOffice + " at " + pickupHour;
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);

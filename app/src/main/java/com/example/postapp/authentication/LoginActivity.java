@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        binding.etLoginEmail.setText("nicolaiciucmaria19@stud.ase.ro");
-        binding.etLoginPass.setText("123456");
+//        binding.etLoginEmail.setText("nicolaiciucmaria19@stud.ase.ro");
+//        binding.etLoginPass.setText("123456");
     }
 }

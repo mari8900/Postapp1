@@ -4,4 +4,9 @@
         parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/fredokamedium</item>
     </style>
+
+    <style name="Dialog">
+        <item name="android:textColorPrimary">@color/RomaniaBlue</item>
+        <item name="android:textColor">@color/RomaniaBlue</item>
+    </style>
 </resources>

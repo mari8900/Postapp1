@@ -1,7 +1,11 @@
 package com.example.postapp.fragments;
 
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -9,6 +13,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -19,6 +24,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,16 +33,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.postapp.TimepickerAdapterHour;
 import com.example.postapp.TimepickerAdapterMinutes;
 import com.example.postapp.authentication.LoginActivity;
@@ -48,6 +61,7 @@ import com.example.postapp.classes.User;
 import com.example.postapp.databinding.FragmentAppointmentBinding;
 import com.example.postapp.utils.AlarmReceiver;
 import com.example.postapp.utils.Constants;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,6 +72,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -82,8 +97,9 @@ public class FragmentAppointment extends Fragment {
     private List<Appointment> appointmentList = new ArrayList<>();
     private String selectedHour = "";
     private String selectedMin = "";
-    private boolean checkedNotif;
-
+    private boolean checkedNotif, firstStart = true;
+    private AnimatorSet mSetRightOut, mSetLeftIn, selectedRightOut, selectedLeftOut;
+    int spinnerpos = -1;
 
     @Nullable
     @Override
@@ -96,6 +112,7 @@ public class FragmentAppointment extends Fragment {
         reference = firebaseDatabase.getReference();
 
         listeners();
+        loadAnimations();
 
         return binding.getRoot();
     }
@@ -121,6 +138,7 @@ public class FragmentAppointment extends Fragment {
                     for (int i = 0; i < Constants.opList.length; i++) {
                         if (Constants.opList[i].equals(op)) {
                             binding.spinnerCreate.setSelection(i);
+                            spinnerpos = i;
                             postalOffice = Constants.opList[i];
                             break;
                         }
@@ -185,7 +203,22 @@ public class FragmentAppointment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 postalOffice = Constants.opList[i];
                 binding.btnHourPicker.setText("");
-                binding.btnDatePicker.setText("");
+                //binding.btnDatePicker.setText("");
+                if(!firstStart) {
+                    if(spinnerpos != i) {
+                        new AlertDialog.Builder(new ContextThemeWrapper(requireContext(), R.style.Dialog))
+                                .setTitle("Payment info")
+                                .setMessage("In order to move the parcel from one Post Office to another, an additional fee of 15 RON is requested.")
+                                .setPositiveButton("Agree", (dialog, which) -> unknown())
+                                .setNegativeButton("Cancel", (dialog, which) -> binding.spinnerCreate.setSelection(spinnerpos))
+                                .show();
+
+                    }
+
+                } else {
+                    firstStart = false;
+                }
+
             }
 
             @Override
@@ -196,7 +229,9 @@ public class FragmentAppointment extends Fragment {
 
         binding.imgLupa.setOnClickListener(view -> searchTrackingNo());
 
-        binding.btnCreateAppt.setOnClickListener(view -> addAppointmentFirebase());
+        binding.btnCreateAppt.setOnClickListener(view -> {
+            addAppointmentFirebase();
+        });
 
         binding.notifBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -204,6 +239,10 @@ public class FragmentAppointment extends Fragment {
                 checkedNotif = b;
             }
         });
+    }
+
+    private void unknown() {
+
     }
 
     private void addAppointmentFirebase() {
@@ -217,7 +256,11 @@ public class FragmentAppointment extends Fragment {
         else if (binding.btnHourPicker.getText().toString().isEmpty())
             binding.btnHourPicker.setError("Hour must be selected");
         else {
-            createAppointment();
+            if(postalOffice.equals(Constants.opList[spinnerpos])) {
+                createAppointment();
+            } else {
+                addCreditCard();
+            }
         }
 
     }
@@ -462,6 +505,168 @@ public class FragmentAppointment extends Fragment {
         dialog.show();
     }
 
+    private void addCreditCard() {
+        final Dialog dialog = new Dialog(getContext(), android.R.style.Theme_NoTitleBar_Fullscreen);
+        dialog.setContentView(R.layout.credit_card_dialog);
+        Button btnNext, btnSave, btnBack;
+        ImageButton btnClose;
+        ImageView imgCardFront, imgCardBack;
+        EditText etCardNo, etCardholderName;
+        Spinner spinnerM, spinnerY;
+        TextInputLayout layoutNumber, layoutName, layoutCVV;
+
+        btnNext = dialog.findViewById(R.id.btnNextStep);
+        btnSave = dialog.findViewById(R.id.btnSaveCreditCard);
+        imgCardFront = dialog.findViewById(R.id.imgCardFront);
+        imgCardBack = dialog.findViewById(R.id.imgCardBack);
+        etCardNo = dialog.findViewById(R.id.etCardNumber);
+        etCardholderName = dialog.findViewById(R.id.etCardholderName);
+
+        spinnerM = dialog.findViewById(R.id.spinnerMonth);
+        spinnerY = dialog.findViewById(R.id.spinnerYear);
+        layoutNumber = dialog.findViewById(R.id.textInputLayoutCreditCard);
+        layoutName = dialog.findViewById(R.id.textInputLayoutCardholderName);
+        layoutCVV = dialog.findViewById(R.id.textInputLayoutCVV);
+        btnBack = dialog.findViewById(R.id.btnBackCard);
+        btnClose = dialog.findViewById(R.id.btnCloseCard);
+
+        btnNext.setOnClickListener(view -> {
+            String cardNumber = etCardNo.getText().toString().trim();
+            String cardholderName = etCardholderName.getText().toString().trim();
+
+            if(cardNumber.isEmpty()) {
+                etCardNo.setError("Card number is required!");
+                etCardNo.requestFocus();
+
+            } else if(cardNumber.length() != 16) {
+                etCardNo.setError("Card number must be 16 digits");
+                etCardNo.requestFocus();
+
+            } else if(cardholderName.isEmpty()) {
+                etCardholderName.setError("Cardholder name is required!");
+                etCardholderName.requestFocus();
+            } else {
+                layoutNumber.setVisibility(View.GONE);
+                layoutName.setVisibility(View.GONE);
+                layoutCVV.setVisibility(View.VISIBLE);
+                btnNext.setVisibility(View.GONE);
+                btnSave.setVisibility(View.VISIBLE);
+                btnBack.setVisibility(View.VISIBLE);
+                spinnerM.setVisibility(View.GONE);
+                spinnerY.setVisibility(View.GONE);
+                flipCard(imgCardFront, imgCardBack);
+            }
+
+        });
+
+        btnBack.setOnClickListener(view -> {
+            layoutNumber.setVisibility(View.VISIBLE);
+            layoutName.setVisibility(View.VISIBLE);
+            layoutCVV.setVisibility(View.GONE);
+            btnNext.setVisibility(View.VISIBLE);
+            btnSave.setVisibility(View.GONE);
+            btnBack.setVisibility(View.GONE);
+            spinnerM.setVisibility(View.VISIBLE);
+            spinnerY.setVisibility(View.VISIBLE);
+            flipCard(imgCardBack, imgCardFront);
+        });
+
+        btnClose.setOnClickListener(view -> dialog.dismiss());
+
+        btnSave.setOnClickListener(view -> {
+            EditText etCVV;
+            TextView tvSuccess, tvAddCard;
+            LottieAnimationView lottieCardSuccess;
+
+            etCVV = dialog.findViewById(R.id.etCVV);
+            tvSuccess = dialog.findViewById(R.id.tvPaySuccess);
+            tvAddCard = dialog.findViewById(R.id.tvAddCreditCard);
+            lottieCardSuccess = dialog.findViewById(R.id.lottie_card_success);
+            String cvv = etCVV.getText().toString().trim();
+
+            if(cvv.isEmpty()) {
+                etCVV.setError("CVV is required!");
+                etCVV.requestFocus();
+            } else if(cvv.length() != 3) {
+                etCVV.setError("CVV code must be 3 digits");
+                etCVV.requestFocus();
+            } else {
+                //Toast.makeText(getContext(), "Payment successfull!", Toast.LENGTH_LONG).show();
+                imgCardBack.setVisibility(View.GONE);
+                layoutCVV.setVisibility(View.GONE);
+                btnSave.setVisibility(View.GONE);
+                btnBack.setVisibility(View.GONE);
+                tvAddCard.setVisibility(View.GONE);
+                tvSuccess.setVisibility(View.VISIBLE);
+                lottieCardSuccess.setVisibility(View.VISIBLE);
+                lottieCardSuccess.playAnimation();
+                lottieCardSuccess.addAnimatorListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        dialog.dismiss();
+                        createAppointment();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+
+            }
+        });
+
+        List<String> monthsAdapter = Arrays.asList("01 JAN", "02 FEB", "03 MAR", "04 APR", "05 MAY", "06 JUN", "07 JUL", "08 AUG", "09 SEP", "10 OCT", "11 NOV", "12 DEC");
+        List<Integer> yearsAdapter = Arrays.asList(2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029);
+        ArrayAdapter<String> spinnerMonthsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, monthsAdapter);
+        spinnerMonthsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<Integer> spinnerYearsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, yearsAdapter);
+        spinnerYearsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerM.setAdapter(spinnerMonthsAdapter);
+        spinnerY.setAdapter(spinnerYearsAdapter);
+
+        dialog.show();
+    }
+
+    private void loadAnimations() {
+        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.out_animation);
+        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.in_animation);
+        selectedRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.out_animation);
+        selectedLeftOut = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.in_animation);
+        selectedRightOut.addListener(animatorListenerAdapter);
+        selectedLeftOut.addListener(animatorListenerAdapter);
+    }
+
+    private AnimatorListenerAdapter animatorListenerAdapter = new AnimatorListenerAdapter() {
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            super.onAnimationEnd(animation);
+        }
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+            super.onAnimationStart(animation);
+        }
+    };
+
+    public void flipCard(ImageView flipFront, ImageView flipBack) {
+            mSetRightOut.setTarget(flipFront);
+            mSetLeftIn.setTarget(flipBack);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+    }
+
     private void getAppointmentsFromDb() {
 
 
@@ -524,8 +729,8 @@ public class FragmentAppointment extends Fragment {
         calendarAlarm.set(Calendar.DAY_OF_YEAR, calendarAlarm.get(Calendar.DAY_OF_YEAR) - 1);
 
 
-        calendarAlarm.set(Calendar.HOUR_OF_DAY, 11);
-        calendarAlarm.set(Calendar.MINUTE, 46);
+        calendarAlarm.set(Calendar.HOUR_OF_DAY, 22);
+        calendarAlarm.set(Calendar.MINUTE, 55);
 
         String notifMessage = "Don't forget about your pickup appointment tomorrow at PO " + postalOffice + " at " + pickupHour;
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
